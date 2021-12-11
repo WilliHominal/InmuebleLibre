@@ -62,7 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapa.getUiSettings().setTiltGesturesEnabled(false);
         mapa.getUiSettings().setRotateGesturesEnabled(false);
 
-        //Habilitar botones zoom
+        //Habilitar botones zoom y deshabilitar botones del marcador
         mapa.getUiSettings().setZoomControlsEnabled(true);
         mapa.getUiSettings().setMapToolbarEnabled(false);
 
