@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmuebleLibre">
         <activity
+            android:name=".RegistrarActivity"
+            android:exported="true" />
+        <activity
             android:name=".AgregarInmuebleActivity"
             android:exported="true" />
         <activity

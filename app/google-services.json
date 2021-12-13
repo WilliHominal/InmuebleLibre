@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "244129386240",
+    "project_id": "possible-byway-334200",
+    "storage_bucket": "possible-byway-334200.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244129386240:android:9170eee99b04cd084c2de5",
+        "android_client_info": {
+          "package_name": "com.mmw.inmueblelibre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244129386240-hv7pt2ng230ra75t0eqllobo25klfqcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mmw.inmueblelibre",
+            "certificate_hash": "84950c972652dfd4478dbec2794f8f276796f3a0"
+          }
+        },
+        {
+          "client_id": "244129386240-oj9d4pj68idgqgn7llqj3d4c262lh9hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5AlbbyGoLc9sI2RrK_qn3dgquh75rF-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244129386240-oj9d4pj68idgqgn7llqj3d4c262lh9hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
