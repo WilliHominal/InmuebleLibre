@@ -2,6 +2,7 @@ package com.mmw.inmueblelibre;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,41 +18,59 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class InicioPropietarioActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private Button cerrarSesionBTN;
-    private TextView nombreUsuarioTV;
-    private TextView correoUsuarioTV;
+public class InicioPropietarioActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseFirebase;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView menuDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_propietario);
 
-        cerrarSesionBTN = (Button) findViewById(R.id.INICIOPROP_cerrar_sesion_BTN);
-        nombreUsuarioTV = (TextView) findViewById(R.id.INICIOPROP_bienvenido_TV);
-        correoUsuarioTV = (TextView) findViewById(R.id.INICIOPROP_correo_TV);
-
-        cerrarSesionBTN.setOnClickListener(this);
-
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
 
-        obtenerInfoUsuario();
-    }
+        drawerLayout = (DrawerLayout) findViewById(R.id.INICIOPROP_drawer_layout);
+        menuDrawer = (NavigationView) findViewById(R.id.INICIOPROP_menu_drawer);
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.INICIOPROP_cerrar_sesion_BTN:
-                firebaseAuth.signOut();
-                startActivity(new Intent(InicioPropietarioActivity.this, LoginActivity.class));
-                finish();
-                break;
-        }
+        //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
+        menuDrawer.setNavigationItemSelectedListener(menuItem -> {
+
+            drawerLayout.closeDrawer(menuDrawer);
+
+            switch (menuItem.getItemId()){
+                case R.id.MENUPROP_menu_principal_opc:
+                    //IR AL MENU PRINCIPAL (Listado de inmuebles del usuario)
+                    break;
+
+                case R.id.MENUPROP_listar_reservas_opc:
+                    //IR A LISTADO DE RESERVAS
+                    break;
+
+                case R.id.MENUPROP_soporte_opc:
+                    //IR A SOPORTE
+                    break;
+
+                case R.id.MENUPROP_mi_cuenta_opc:
+                    //IR A CONFIGURACION DE LA CUENTA
+                    break;
+
+                case R.id.MENUPROP_cerrar_sesion_opc:
+                    //CIERRA SESION Y DEVUELVE AL MENÚ INICIAL
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(InicioPropietarioActivity.this, MainActivity.class));
+                    finish();
+                    break;
+            }
+
+            return false;
+        });
+
+        obtenerInfoUsuario();
     }
 
     private void obtenerInfoUsuario(){
@@ -63,8 +83,9 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
                     String nombre = snapshot.child("nombre").getValue().toString();
                     String correo = snapshot.child("email").getValue().toString();
 
-                    nombreUsuarioTV.setText("Bienvenido propietario " + nombre);
-                    correoUsuarioTV.setText(correo);
+                    View drawerHeader = menuDrawer.getHeaderView(0);
+                    ((TextView) drawerHeader.findViewById(R.id.DRAWERPROP_nombre_TV)).setText(nombre);
+                    ((TextView) drawerHeader.findViewById(R.id.DRAWERPROP_correo_TV)).setText(correo);
                 }
             }
 
