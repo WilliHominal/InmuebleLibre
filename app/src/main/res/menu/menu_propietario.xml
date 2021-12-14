@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_grupo_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/MENUPROP_menu_principal_opc"
+            android:icon="@drawable/icon_home"
+            android:title="MENÚ PRINCIPAL" />
+        <item
+            android:id="@+id/MENUPROP_listar_reservas_opc"
+            android:checked="false"
+            android:icon="@drawable/icon_lista_inmuebles"
+            android:title="LISTA DE RESERVAS" />
+        <item
+            android:id="@+id/MENUPROP_soporte_opc"
+            android:checked="false"
+            android:icon="@drawable/icon_soporte"
+            android:title="SOPORTE" />
+        <item
+            android:id="@+id/MENUPROP_mi_cuenta_opc"
+            android:checked="false"
+            android:icon="@drawable/icon_cuenta"
+            android:title="MI CUENTA" />
+        <item
+            android:id="@+id/MENUPROP_cerrar_sesion_opc"
+            android:checked="false"
+            android:icon="@drawable/icon_cerrar_sesion"
+            android:title="CERRAR SESIÓN" />
+    </group>
+</menu>
