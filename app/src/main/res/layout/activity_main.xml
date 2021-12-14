@@ -20,11 +20,22 @@
 
     <!--Boton de prueba (eliminar despues)-->
     <Button
+        android:id="@+id/prueba_loguearse_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Probar Inicio sesión"
+        app:layout_constraintTop_toBottomOf="@id/prueba_agregar_inmueble_BTN"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/prueba_registrarse_BTN"/>
+
+    <!--Boton de prueba (eliminar despues)-->
+    <Button
         android:id="@+id/prueba_registrarse_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Probar Registro"
-        app:layout_constraintTop_toBottomOf="@id/prueba_agregar_inmueble_BTN"
+        app:layout_constraintTop_toBottomOf="@id/prueba_loguearse_BTN"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

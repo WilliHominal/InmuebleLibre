@@ -15,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmuebleLibre">
         <activity
+            android:name=".InicioClienteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".InicioPropietarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".RegistrarActivity"
             android:exported="true" />
         <activity

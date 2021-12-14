@@ -31,7 +31,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
     private String tipo;
 
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
         registrarseBTN.setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseFirebase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -60,13 +60,14 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
                 tipo = tipoUsuarioRG.getCheckedRadioButtonId() == R.id.REGISTRAR_propietario_RB ? "PROPIETARIO" : "CLIENTE";
 
                 if (nombre.isEmpty() || email.isEmpty() || contrasena.isEmpty()){
-                    Toast.makeText(RegistrarActivity.this, "Debe completar los campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (contrasena.length() < 6){
-                        Toast.makeText(RegistrarActivity.this, "La contraseña debe tener 6 caracteres", Toast.LENGTH_SHORT).show();
-                    }
-                    registrarUsuario();
+                    Toast.makeText(RegistrarActivity.this, "Completa los campos", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (contrasena.length() < 6){
+                    Toast.makeText(RegistrarActivity.this, "La contraseña debe tener 6 caracteres", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                registrarUsuario();
                 break;
         }
     }
@@ -82,7 +83,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
 
                String id = firebaseAuth.getCurrentUser().getUid();
 
-               databaseReference.child("Usuarios").child(id).setValue(mapaValores).addOnCompleteListener(taskDB -> {
+               databaseFirebase.child("Usuarios").child(id).setValue(mapaValores).addOnCompleteListener(taskDB -> {
                    if (taskDB.isSuccessful()){
                        startActivity(new Intent(RegistrarActivity.this, MainActivity.class));
                        finish();
