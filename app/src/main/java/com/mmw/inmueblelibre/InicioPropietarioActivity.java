@@ -3,12 +3,17 @@ package com.mmw.inmueblelibre;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -18,6 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
+import com.mmw.inmueblelibre.model.InmuebleModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InicioPropietarioActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +36,10 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
 
     private DrawerLayout drawerLayout;
     private NavigationView menuDrawer;
+
+    RecyclerView.LayoutManager inmueblesLayoutManager;
+    RecyclerView listaInmueblesRV;
+    InmuebleAdapter adaptadorListaInmuebles;
 
     private FloatingActionButton agregarInmuebleBtn;
 
@@ -41,6 +55,14 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
         menuDrawer = (NavigationView) findViewById(R.id.INICIOPROP_menu_drawer);
 
         agregarInmuebleBtn = findViewById(R.id.INICIOPROP_agregar_inmueble_BTN);
+
+        listaInmueblesRV = findViewById(R.id.INICIOPROP_listaInmuebles);
+        inmueblesLayoutManager = new LinearLayoutManager(this);
+        listaInmueblesRV.setLayoutManager(inmueblesLayoutManager);
+        adaptadorListaInmuebles = new InmuebleAdapter(new ArrayList<>());
+        listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
+        obtenerLista();
+
 
         agregarInmuebleBtn.setOnClickListener(this);
 
@@ -87,6 +109,38 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
                 startActivity(new Intent(InicioPropietarioActivity.this, AgregarInmuebleActivity.class));
                 break;
         }
+    }
+
+    private void obtenerLista(){
+        databaseFirebase.child("Inmuebles").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    List<InmuebleModel> listaInmuebles = new ArrayList<>();
+
+                    for (DataSnapshot snap : snapshot.getChildren()){
+                        String id = snap.getKey().toString();
+                        String precio = snap.child("precio").getValue().toString();
+                        String direccion = (snap.child("direccion").getValue().toString().split(": "))[1];
+                        String idProp = snap.child("id_propietario").getValue().toString();
+
+                        if (!idProp.equals(firebaseAuth.getCurrentUser().getUid())) return;
+
+                        InmuebleModel inmTemp = new InmuebleModel(id, direccion, precio);
+
+                        listaInmuebles.add(inmTemp);
+
+                    }
+                    adaptadorListaInmuebles = new InmuebleAdapter(listaInmuebles);
+                    listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void obtenerInfoUsuario(){

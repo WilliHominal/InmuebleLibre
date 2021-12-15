@@ -12,16 +12,12 @@
         android:layout_height="match_parent"
         tools:context=".InicioPropietarioActivity">
 
-        <TextView
-            android:id="@+id/INICIOPROP_bienvenido_TV"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/INICIOPROP_listaInmuebles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="INICIO PROPIETARIOS"
-            android:textSize="20sp"
-            android:gravity="center"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/INICIOPROP_agregar_inmueble_BTN"

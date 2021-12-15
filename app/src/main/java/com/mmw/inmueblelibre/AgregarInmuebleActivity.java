@@ -159,13 +159,16 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
 
         String id = firebaseAuth.getCurrentUser().getUid();
         Map<String, Object> mapaValores = new HashMap<>();
+        mapaValores.put("id_propietario", id);
+        mapaValores.put("id_cliente", "");
         mapaValores.put("descripcion", descripcion);
         mapaValores.put("precio", precio);
         mapaValores.put("provincia", provinciasSpinner.getSelectedItem().toString());
         mapaValores.put("ciudad", ciudadesSpinner.getSelectedItem().toString());
         mapaValores.put("direccion", ubiSeleccionada.toString());
+        mapaValores.put("estado", "CREADO");
 
-        databaseFirebase.child("Usuarios").child(id).child("Inmuebles").push().setValue(mapaValores).addOnCompleteListener(taskDB -> {
+        databaseFirebase.child("Inmuebles").push().setValue(mapaValores).addOnCompleteListener(taskDB -> {
             if (taskDB.isSuccessful()){
                 Toast.makeText(getApplicationContext(), "Inmueble registrado", Toast.LENGTH_SHORT).show();
             } else {
