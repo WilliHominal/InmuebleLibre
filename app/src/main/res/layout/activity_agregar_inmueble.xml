@@ -7,27 +7,53 @@
     tools:context=".AgregarInmuebleActivity">
 
     <TextView
-        android:id="@+id/AI_titulo_TV"
+        android:id="@+id/AI_descripcion_TV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
         android:layout_marginTop="5dp"
-        android:text="TÍTULO"
+        android:text="DESCRIPCIÓN"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/AI_titulo_ET"
+        android:id="@+id/AI_descripcion_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
-        android:hint="Ingrese el título de la publicación..."
+        android:hint="Ingrese la descripción del inmueble..."
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AI_titulo_TV" />
+        app:layout_constraintTop_toBottomOf="@id/AI_descripcion_TV"/>
+
+    <TextView
+        android:id="@+id/AI_PRECIO_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="5dp"
+        android:text="PRECIO"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AI_descripcion_ET"/>
+
+    <EditText
+        android:id="@+id/AI_precio_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:hint="$0.00"
+        android:inputType="numberDecimal"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AI_PRECIO_TV"/>
+
+
 
     <TextView
         android:id="@+id/AI_provincia_TV"
@@ -38,7 +64,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AI_titulo_ET" />
+        app:layout_constraintTop_toBottomOf="@id/AI_precio_ET" />
 
     <Spinner
         android:id="@+id/AI_provincia_SP"
@@ -107,5 +133,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/AI_minimapa"
         app:layout_constraintBottom_toBottomOf="@id/AI_minimapa"/>
+
+    <Button
+        android:id="@+id/AI_registrar_inmueble_BTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="REGISTRAR"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

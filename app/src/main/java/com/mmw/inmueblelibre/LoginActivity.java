@@ -85,7 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startActivity(new Intent(LoginActivity.this, InicioPropietarioActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "es cliente", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, InicioClienteActivity.class));
+                        finish();
                     }
                 }
             }

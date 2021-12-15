@@ -22,12 +22,14 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
     private EditText nombreET;
     private EditText emailET;
     private EditText contrasenaET;
+    private EditText dniET;
     private Button registrarseBTN;
     private RadioGroup tipoUsuarioRG;
 
     private String nombre;
     private String email;
     private String contrasena;
+    private String dni;
     private String tipo;
 
     FirebaseAuth firebaseAuth;
@@ -41,6 +43,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
         nombreET = (EditText) findViewById(R.id.REGISTRAR_nombre_ET);
         emailET = (EditText) findViewById(R.id.REGISTRAR_email_ET);
         contrasenaET = (EditText) findViewById(R.id.REGISTRAR_contrasena_ET);
+        dniET = (EditText) findViewById(R.id.REGISTRAR_dni_ET);
         registrarseBTN = (Button) findViewById(R.id.REGISTRAR_registrarse_BTN);
         tipoUsuarioRG = (RadioGroup) findViewById(R.id.REGISTRAR_tipo_usuario_RG);
 
@@ -57,6 +60,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
                 nombre = nombreET.getText().toString();
                 email = emailET.getText().toString();
                 contrasena = contrasenaET.getText().toString();
+                dni = dniET.getText().toString();
                 tipo = tipoUsuarioRG.getCheckedRadioButtonId() == R.id.REGISTRAR_propietario_RB ? "PROPIETARIO" : "CLIENTE";
 
                 if (nombre.isEmpty() || email.isEmpty() || contrasena.isEmpty()){
@@ -80,6 +84,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
                mapaValores.put("email", email);
                mapaValores.put("contrasena", contrasena);
                mapaValores.put("tipo", tipo);
+               mapaValores.put("dni", dni);
 
                String id = firebaseAuth.getCurrentUser().getUid();
 
