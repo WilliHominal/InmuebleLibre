@@ -5,38 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/INICIOPROP_drawer_layout">
+    android:id="@+id/LRP_drawer_layout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".InicioPropietarioActivity">
+        tools:context=".ListaReservasPropietarioActivity">
 
         <include layout="@layout/toolbar"
-            android:id="@+id/INICIOPROP_toolbar"
+            android:id="@+id/LRP_toolbar"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/INICIOPROP_listaInmuebles"
+            android:id="@+id/LRP_listaInmuebles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/INICIOPROP_toolbar" />
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/INICIOPROP_agregar_inmueble_BTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/icon_add" />
+            app:layout_constraintTop_toBottomOf="@id/LRP_toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/INICIOPROP_menu_drawer"
+        android:id="@+id/LRP_menu_drawer"
         android:background="#ffffff"
         android:layout_height="match_parent"
         android:layout_width="280dp"

@@ -1,9 +1,12 @@
 package com.mmw.inmueblelibre;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrarActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Toolbar toolbar;
 
     private EditText nombreET;
     private EditText emailET;
@@ -40,6 +45,11 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
+        toolbar = findViewById(R.id.REGISTRAR_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
+
         nombreET = (EditText) findViewById(R.id.REGISTRAR_nombre_ET);
         emailET = (EditText) findViewById(R.id.REGISTRAR_email_ET);
         contrasenaET = (EditText) findViewById(R.id.REGISTRAR_contrasena_ET);
@@ -51,6 +61,16 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

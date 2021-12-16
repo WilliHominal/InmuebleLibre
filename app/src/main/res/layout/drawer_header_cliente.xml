@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#c53ec7">
+
+    <ImageView
+        android:id="@+id/DRAWERCLI_foto"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="top"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_marginTop="20dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/DRAWERCLI_nombre_TV"/>
+
+    <TextView
+        android:id="@+id/DRAWERCLI_nombre_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:layout_marginVertical="8dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/DRAWERCLI_foto"
+        app:layout_constraintBottom_toTopOf="@id/DRAWERCLI_correo_TV"/>
+
+    <TextView
+        android:id="@+id/DRAWERCLI_correo_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="correo@gmail.com"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/DRAWERCLI_nombre_TV"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

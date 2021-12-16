@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/LOGIN_toolbar"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <EditText
         android:id="@+id/LOGIN_email_ET"
         android:layout_width="match_parent"
@@ -14,7 +18,7 @@
         android:hint="Email"
         android:textSize="20sp"
         android:inputType="textEmailAddress"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/LOGIN_toolbar"
         app:layout_constraintBottom_toTopOf="@id/LOGIN_contrasena_ET"/>
 
     <EditText

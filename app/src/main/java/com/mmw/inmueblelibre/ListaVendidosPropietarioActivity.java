@@ -10,16 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +28,7 @@ import com.mmw.inmueblelibre.model.InmuebleModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InicioPropietarioActivity extends AppCompatActivity implements View.OnClickListener {
+public class ListaVendidosPropietarioActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -43,37 +38,30 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
     private DrawerLayout drawerLayout;
     private NavigationView menuDrawer;
 
-    RecyclerView.LayoutManager inmueblesLayoutManager;
-    RecyclerView listaInmueblesRV;
-    InmuebleAdapter adaptadorListaInmuebles;
-
-    private FloatingActionButton agregarInmuebleBtn;
+    RecyclerView.LayoutManager vendidosLayoutManager;
+    RecyclerView listaVendidosRV;
+    InmuebleAdapter adaptadorListaVendidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_propietario);
+        setContentView(R.layout.activity_lista_vendidos_propietario);
 
-        toolbar = findViewById(R.id.INICIOPROP_toolbar);
+        toolbar = findViewById(R.id.LVP_toolbar);
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.INICIOPROP_drawer_layout);
-        menuDrawer = (NavigationView) findViewById(R.id.INICIOPROP_menu_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.LVP_drawer_layout);
+        menuDrawer = (NavigationView) findViewById(R.id.LVP_menu_drawer);
 
-        agregarInmuebleBtn = findViewById(R.id.INICIOPROP_agregar_inmueble_BTN);
-
-        listaInmueblesRV = findViewById(R.id.INICIOPROP_listaInmuebles);
-        inmueblesLayoutManager = new LinearLayoutManager(this);
-        listaInmueblesRV.setLayoutManager(inmueblesLayoutManager);
-        adaptadorListaInmuebles = new InmuebleAdapter(new ArrayList<>());
-        listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
+        listaVendidosRV = findViewById(R.id.LVP_listaInmuebles);
+        vendidosLayoutManager = new LinearLayoutManager(this);
+        listaVendidosRV.setLayoutManager(vendidosLayoutManager);
+        adaptadorListaVendidos = new InmuebleAdapter(new ArrayList<>());
+        listaVendidosRV.setAdapter(adaptadorListaVendidos);
         obtenerLista();
-
-
-        agregarInmuebleBtn.setOnClickListener(this);
 
         //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
         menuDrawer.setNavigationItemSelectedListener(menuItem -> {
@@ -82,23 +70,23 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
 
             switch (menuItem.getItemId()){
                 case R.id.MENUPROP_menu_principal_opc:
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, InicioPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_listar_reservas_opc:
-                    startActivity(new Intent(InicioPropietarioActivity.this, ListaReservasPropietarioActivity.class));
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, ListaReservasPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_listar_vendidos_opc:
-                    startActivity(new Intent(InicioPropietarioActivity.this, ListaVendidosPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_mi_cuenta_opc:
-                    startActivity(new Intent(InicioPropietarioActivity.this, ConfiguracionCuentaActivity.class));
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, ConfiguracionCuentaActivity.class));
                     break;
 
                 case R.id.MENUPROP_cerrar_sesion_opc:
                     firebaseAuth.signOut();
-                    startActivity(new Intent(InicioPropietarioActivity.this, MainActivity.class));
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, MainActivity.class));
                     finish();
                     break;
             }
@@ -126,39 +114,30 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.INICIOPROP_agregar_inmueble_BTN:
-                startActivity(new Intent(InicioPropietarioActivity.this, AgregarInmuebleActivity.class));
-                break;
-        }
-    }
-
     private void obtenerLista(){
         databaseFirebase.child("Inmuebles").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    List<InmuebleModel> listaInmuebles = new ArrayList<>();
+                    List<InmuebleModel> listaVendidos = new ArrayList<>();
 
                     for (DataSnapshot snap : snapshot.getChildren()){
-                        String id = snap.getKey().toString();
+                        String id = snap.getKey();
                         String precio = snap.child("precio").getValue().toString();
                         String direccion = (snap.child("direccion").getValue().toString().split(": "))[1];
                         String idProp = snap.child("id_propietario").getValue().toString();
                         String estado = snap.child("estado").getValue().toString();
 
                         if (!idProp.equals(firebaseAuth.getCurrentUser().getUid())) continue;
-                        if (!estado.equals("CREADO")) continue;
+                        if (!estado.equals("VENDIDO")) continue;
 
                         InmuebleModel inmTemp = new InmuebleModel(id, direccion, precio);
 
-                        listaInmuebles.add(inmTemp);
+                        listaVendidos.add(inmTemp);
 
                     }
-                    adaptadorListaInmuebles = new InmuebleAdapter(listaInmuebles);
-                    listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
+                    adaptadorListaVendidos = new InmuebleAdapter(listaVendidos);
+                    listaVendidosRV.setAdapter(adaptadorListaVendidos);
                 }
             }
 

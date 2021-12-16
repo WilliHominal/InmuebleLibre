@@ -1,12 +1,15 @@
 package com.mmw.inmueblelibre;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +40,8 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
 
     private final int LAUNCH_MAPS_ACTIVITY = 123;
 
+    Toolbar toolbar;
+
     Button seleccionarUbicacionBtn;
     GoogleMap minimapa;
     LatLng ubiSeleccionada;
@@ -55,6 +60,11 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_inmueble);
+
+        toolbar = (Toolbar) findViewById(R.id.AI_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
@@ -102,6 +112,16 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
             ArrayAdapter<ListaCiudadesModel.CiudadModel> adaptadorCiudades = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, ciudades.getMunicipios());
             ciudadesSpinner.setAdapter(adaptadorCiudades);
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

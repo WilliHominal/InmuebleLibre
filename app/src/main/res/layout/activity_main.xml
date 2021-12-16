@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--Boton de prueba (eliminar despues)-->
+    <include layout="@layout/toolbar"/>
+
     <Button
         android:id="@+id/prueba_loguearse_BTN"
         android:layout_width="match_parent"

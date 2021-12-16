@@ -7,6 +7,9 @@
     android:orientation="vertical"
     tools:context=".MapsActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/MA_toolbar"/>
+
     <fragment
         android:id="@+id/MA_mapa"
         android:name="com.google.android.gms.maps.SupportMapFragment"

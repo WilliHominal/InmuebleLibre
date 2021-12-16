@@ -4,26 +4,26 @@
         android:id="@+id/menu_grupo_1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/MENUPROP_menu_principal_opc"
+            android:id="@+id/MENUCLI_menu_principal_opc"
             android:icon="@drawable/icon_home"
             android:title="MENÚ PRINCIPAL" />
         <item
-            android:id="@+id/MENUPROP_listar_reservas_opc"
+            android:id="@+id/MENUCLI_listar_inmuebles_opc"
             android:checked="false"
             android:icon="@drawable/icon_lista_inmuebles"
-            android:title="LISTA DE RESERVAS" />
+            android:title="LISTA DE INMUEBLES" />
         <item
-            android:id="@+id/MENUPROP_listar_vendidos_opc"
+            android:id="@+id/MENUCLI_listar_comprados_opc"
             android:checked="false"
-            android:icon="@drawable/icon_vendidos"
-            android:title="INMUEBLES VENDIDOS" />
+            android:icon="@drawable/icon_comprados"
+            android:title="INMUEBLES COMPRADOS" />
         <item
-            android:id="@+id/MENUPROP_mi_cuenta_opc"
+            android:id="@+id/MENUCLI_mi_cuenta_opc"
             android:checked="false"
             android:icon="@drawable/icon_cuenta"
             android:title="MI CUENTA" />
         <item
-            android:id="@+id/MENUPROP_cerrar_sesion_opc"
+            android:id="@+id/MENUCLI_cerrar_sesion_opc"
             android:checked="false"
             android:icon="@drawable/icon_cerrar_sesion"
             android:title="CERRAR SESIÓN" />

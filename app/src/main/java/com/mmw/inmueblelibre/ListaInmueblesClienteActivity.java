@@ -29,7 +29,7 @@ import com.mmw.inmueblelibre.model.InmuebleModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InicioClienteActivity extends AppCompatActivity {
+public class ListaInmueblesClienteActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -39,26 +39,26 @@ public class InicioClienteActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView menuDrawer;
 
-    RecyclerView.LayoutManager reservasLayoutManager;
-    RecyclerView listaReservasRV;
-    InmuebleAdapter adaptadorListaReservas;
+    RecyclerView.LayoutManager inmueblesLayoutManager;
+    RecyclerView listaInmueblesRV;
+    InmuebleAdapter adaptadorListaInmuebles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_cliente);
+        setContentView(R.layout.activity_lista_inmuebles_cliente);
 
-        toolbar = findViewById(R.id.INICIOCLI_toolbar);
+        toolbar = findViewById(R.id.LIC_toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.INICIOCLI_drawer_layout);
-        menuDrawer = (NavigationView) findViewById(R.id.INICIOCLI_menu_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.LIC_drawer_layout);
+        menuDrawer = (NavigationView) findViewById(R.id.LIC_menu_drawer);
 
-        listaReservasRV = findViewById(R.id.INICIOCLI_listaReservas);
-        reservasLayoutManager = new LinearLayoutManager(this);
-        listaReservasRV.setLayoutManager(reservasLayoutManager);
-        adaptadorListaReservas = new InmuebleAdapter(new ArrayList<>());
-        listaReservasRV.setAdapter(adaptadorListaReservas);
+        listaInmueblesRV = findViewById(R.id.LIC_listaInmuebles);
+        inmueblesLayoutManager = new LinearLayoutManager(this);
+        listaInmueblesRV.setLayoutManager(inmueblesLayoutManager);
+        adaptadorListaInmuebles = new InmuebleAdapter(new ArrayList<>());
+        listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
@@ -73,23 +73,24 @@ public class InicioClienteActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()) {
                 case R.id.MENUCLI_menu_principal_opc:
+                    startActivity(new Intent(ListaInmueblesClienteActivity.this, InicioClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_listar_inmuebles_opc:
-                    startActivity(new Intent(InicioClienteActivity.this, ListaInmueblesClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_listar_comprados_opc:
-                    startActivity(new Intent(InicioClienteActivity.this, ListaCompradosClienteActivity.class));
+                    startActivity(new Intent(ListaInmueblesClienteActivity.this, ListaCompradosClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_mi_cuenta_opc:
-                    startActivity(new Intent(InicioClienteActivity.this, ConfiguracionCuentaActivity.class));
+                    startActivity(new Intent(ListaInmueblesClienteActivity.this, ConfiguracionCuentaActivity.class));
                     break;
 
                 case R.id.MENUCLI_cerrar_sesion_opc:
+                    //CIERRA SESION Y DEVUELVE AL MENÚ INICIAL
                     firebaseAuth.signOut();
-                    startActivity(new Intent(InicioClienteActivity.this, MainActivity.class));
+                    startActivity(new Intent(ListaInmueblesClienteActivity.this, MainActivity.class));
                     finish();
                     break;
             }
@@ -143,28 +144,24 @@ public class InicioClienteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    List<InmuebleModel> listaReservas = new ArrayList<>();
+                    List<InmuebleModel> listaInmuebles = new ArrayList<>();
 
                     for (DataSnapshot snap : snapshot.getChildren()){
-                        String id = snap.getKey().toString();
+                        String id = snap.getKey();
 
-                        String idActual = firebaseAuth.getCurrentUser().getUid();
-
-                        String idClienteInmueble = snap.child("id_cliente").getValue().toString();
                         String estado = snap.child("estado").getValue().toString();
                         String precio = snap.child("precio").getValue().toString();
                         String direccion = (snap.child("direccion").getValue().toString().split(": "))[1];
 
-                        if (!idActual.equals(idClienteInmueble)) continue;
-                        if (!estado.equals("RESERVADO")) continue;
+                        if (!estado.equals("CREADO")) continue;
 
                         InmuebleModel inmTemp = new InmuebleModel(id, direccion, precio);
 
-                        listaReservas.add(inmTemp);
+                        listaInmuebles.add(inmTemp);
                     }
 
-                    adaptadorListaReservas = new InmuebleAdapter(listaReservas);
-                    listaReservasRV.setAdapter(adaptadorListaReservas);
+                    adaptadorListaInmuebles = new InmuebleAdapter(listaInmuebles);
+                    listaInmueblesRV.setAdapter(adaptadorListaInmuebles);
                 }
             }
 

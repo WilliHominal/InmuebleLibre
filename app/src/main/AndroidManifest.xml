@@ -15,6 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmuebleLibre">
         <activity
+            android:name=".ListaCompradosClienteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ConfiguracionCuentaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ListaVendidosPropietarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ListaReservasPropietarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ListaInmueblesClienteActivity"
+            android:exported="true" />
+        <activity
             android:name=".InicioClienteActivity"
             android:exported="true" />
         <activity
@@ -22,13 +37,16 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RegistrarActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AgregarInmuebleActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".InicioPropietarioActivity" />
         <activity
             android:name=".MapsActivity"
             android:exported="true" />

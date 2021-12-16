@@ -4,15 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_agregar_inmueble.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_configuracion_cuenta.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_inicio_cliente.xml" value="0.35260416666666666" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_inicio_propietario.xml" value="0.22" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_lista_comprados_cliente.xml" value="0.19427083333333334" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_lista_inmuebles_cliente.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_lista_reservas_propietario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_lista_vendidos_propietario.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_maps.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_registrar.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/drawer_header_cliente.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/drawer_header_propietario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/toolbar.xml" value="0.19427083333333334" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/vista_inmueble.xml" value="0.33" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_cliente.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_propietario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_toolbar.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
