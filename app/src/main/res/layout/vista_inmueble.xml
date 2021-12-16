@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -25,33 +26,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="#00"
+                android:layout_marginVertical="5dp"
                 android:layout_weight="5"
-                android:layout_marginEnd="5dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:textSize="17sp"/>
 
-                <TextView
-                    android:id="@+id/INM_direccion_TV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DIRECCION"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="17sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="5dp"
-                    android:textStyle="bold"/>
-
-
-
-            <TextView
-                android:id="@+id/INM_precio_TV"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="$0.00"
+                android:orientation="horizontal"
                 android:layout_marginVertical="10dp"
-                android:gravity="center"/>
+                android:layout_marginHorizontal="10dp">
 
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/INM_minimapa"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    map:liteMode="true" map:mapType="none"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="PRECIO"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/INM_precio_TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:gravity="center"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
