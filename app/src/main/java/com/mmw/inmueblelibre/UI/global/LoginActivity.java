@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

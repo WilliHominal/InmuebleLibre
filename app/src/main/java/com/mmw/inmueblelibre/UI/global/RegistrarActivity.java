@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.global;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mmw.inmueblelibre.R;
 
 import java.util.HashMap;
 import java.util.Map;

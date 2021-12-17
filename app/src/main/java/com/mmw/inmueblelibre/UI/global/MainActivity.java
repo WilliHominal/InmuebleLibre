@@ -1,14 +1,14 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.global;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,11 +16,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button botonPruebaIniciarSesion;
     TextView crearCuentaTV;
+
+    Toolbar toolbar;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseFirebase;
@@ -29,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.MAIN_toolbar);
+        setSupportActionBar(toolbar);
 
         botonPruebaIniciarSesion = findViewById(R.id.prueba_loguearse_BTN);
         crearCuentaTV = findViewById(R.id.MAIN_crear_cuenta_TV);

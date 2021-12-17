@@ -21,16 +21,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/INM_id_TV"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#00"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="17sp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/INM_id_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#00"
+                    android:layout_weight="1"
+                    android:layout_marginVertical="5dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="17sp"/>
+
+                <Button
+                    android:id="@+id/INM_info_BTN"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    app:icon="@drawable/icon_info" />
+
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.cliente;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mmw.inmueblelibre.UI.global.MainActivity;
+import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 

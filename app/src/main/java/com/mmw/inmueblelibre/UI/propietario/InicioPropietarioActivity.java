@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.propietario;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +24,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mmw.inmueblelibre.UI.global.MainActivity;
+import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
+import com.mmw.inmueblelibre.UI.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 
@@ -107,6 +108,20 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
         });
 
         obtenerInfoUsuario();
+
+        adaptadorListaInmuebles.setOnItemClickListener(new InmuebleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                String tipoUsuario = "PROPIETARIO";
+                String idInmueble = adaptadorListaInmuebles.getInmuebleId(position);
+
+                Intent intent = new Intent(InicioPropietarioActivity.this, VerDetallesInmuebleActivity.class);
+                intent.putExtra("tipo_usuario", tipoUsuario);
+                intent.putExtra("id_inmueble", idInmueble);
+                intent.putExtra("estado_inmueble", "CREADO");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

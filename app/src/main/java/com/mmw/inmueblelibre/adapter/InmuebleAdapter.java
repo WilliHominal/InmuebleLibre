@@ -42,6 +42,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
         MapView minimapa;
         GoogleMap map;
         TextView precioInput;
+        Button verDetallesBtn;
         View view;
 
         public ViewHolder(View vistaInmueble){
@@ -50,6 +51,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
             idInput = vistaInmueble.findViewById(R.id.INM_id_TV);
             minimapa = vistaInmueble.findViewById(R.id.INM_minimapa);
             precioInput = vistaInmueble.findViewById(R.id.INM_precio_TV);
+            verDetallesBtn = vistaInmueble.findViewById(R.id.INM_info_BTN);
 
             if (minimapa != null) {
                 minimapa.onCreate(null);
@@ -57,6 +59,11 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
                 minimapa.getMapAsync(this);
             }
 
+            verDetallesBtn.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
 
         public View contenedor(){
@@ -96,6 +103,10 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
 
     public InmuebleAdapter(List<InmuebleModel> dataSet){
         inmuebleDataSet = dataSet;
+    }
+
+    public String getInmuebleId(int position) {
+        return inmuebleDataSet.get(position).getId();
     }
 
     @Override

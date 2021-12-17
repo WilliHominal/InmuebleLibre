@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UI.global.VerDetallesInmuebleActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/DETALLES_toolbar"/>
+
+    <TextView
+        android:id="@+id/DETALLES_descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:textSize="17sp"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        android:text="DESCRIPCION"/>
+
+    <TextView
+        android:id="@+id/DETALLES_descripcion_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"
+
+        android:text="La casa duteuiqjhr qndasj knduiq iowqennasj dnasjkdnqiaskld 21 dhsuihd 8912hd8921h 89dh1289 dh123 12sd asd as asklda" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/DETALLES_propietario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PROPIETARIO"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="4dp"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/DETALLES_propietario_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prqwioe poeqweWQ"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/DETALLES_fecha_alta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FECHA DE ALTA"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="4dp"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/DETALLES_fecha_alta_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="00/00/0000"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/DETALLES_precio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PRECIO"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="4dp"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/DETALLES_precio_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="$0000.00"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/DETALLES_ubicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UBICACIÓN"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="4dp"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/DETALLES_ubicacion_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="(00.0000000000000, 00.000000000000)"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/DETALLES_datoscliente_reserva"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/DETALLES_nombrecliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLIENTE"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="4dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/DETALLES_nombrecliente_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jaksjd KEIOnsad"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/DETALLES_dnicliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DNI"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="4dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/DETALLES_dnicliente_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="12.321.321"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/DETALLES_correocliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMAIL"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="4dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/DETALLES_correocliente_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="cliente@correo.com"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/DETALLES_fecha_reserva_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/DETALLES_fecha_reserva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FECHA DE RESERVA"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="4dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/DETALLES_fecha_reserva_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="00/00/0000"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/DETALLES_vender_btn_LL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/DETALLES_vender_BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VENDER"
+                android:layout_gravity="bottom"
+                android:textSize="17sp"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/DETALLES_reservar_btn_LL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/DETALLES_reservar_BTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RESERVAR"
+            android:layout_gravity="bottom"
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/DETALLES_fecha_venta_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/DETALLES_fecha_venta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FECHA DE VENTA"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="4dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/DETALLES_fecha_venta_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="00/00/0000"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

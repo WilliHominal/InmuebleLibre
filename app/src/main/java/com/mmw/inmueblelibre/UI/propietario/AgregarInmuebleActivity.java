@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.propietario;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -7,8 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,12 +25,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mmw.inmueblelibre.R;
 import com.mmw.inmueblelibre.model.ListaCiudadesModel;
 import com.mmw.inmueblelibre.model.ListaProvinciasModel;
 import com.mmw.inmueblelibre.repository.CiudadesRepository;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -186,11 +184,16 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
         mapaValores.put("provincia", provinciasSpinner.getSelectedItem().toString());
         mapaValores.put("ciudad", ciudadesSpinner.getSelectedItem().toString());
         mapaValores.put("direccion", ubiSeleccionada.toString());
+        mapaValores.put("fecha_alta", "");
+        mapaValores.put("fecha_reserva", "");
+        mapaValores.put("fecha_venta", "");
         mapaValores.put("estado", "CREADO");
 
         databaseFirebase.child("Inmuebles").push().setValue(mapaValores).addOnCompleteListener(taskDB -> {
             if (taskDB.isSuccessful()){
                 Toast.makeText(getApplicationContext(), "Inmueble registrado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AgregarInmuebleActivity.this, InicioPropietarioActivity.class));
+                finish();
             } else {
                 Toast.makeText(getApplicationContext(), "No se pudieron crear los datos correctamente", Toast.LENGTH_SHORT).show();
             }

@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre;
+package com.mmw.inmueblelibre.UI.propietario;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mmw.inmueblelibre.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 

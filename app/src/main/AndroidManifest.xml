@@ -15,43 +15,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmuebleLibre">
         <activity
-            android:name=".ListaCompradosClienteActivity"
+            android:name=".UI.global.VerDetallesInmuebleActivity"
             android:exported="true" />
         <activity
-            android:name=".ConfiguracionCuentaActivity"
+            android:name=".UI.cliente.ListaCompradosClienteActivity"
             android:exported="true" />
         <activity
-            android:name=".ListaVendidosPropietarioActivity"
+            android:name=".UI.global.ConfiguracionCuentaActivity"
             android:exported="true" />
         <activity
-            android:name=".ListaReservasPropietarioActivity"
+            android:name=".UI.propietario.ListaVendidosPropietarioActivity"
             android:exported="true" />
         <activity
-            android:name=".ListaInmueblesClienteActivity"
+            android:name=".UI.propietario.ListaReservasPropietarioActivity"
             android:exported="true" />
         <activity
-            android:name=".InicioClienteActivity"
+            android:name=".UI.cliente.ListaInmueblesClienteActivity"
             android:exported="true" />
         <activity
-            android:name=".InicioPropietarioActivity"
+            android:name=".UI.cliente.InicioClienteActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".UI.propietario.InicioPropietarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UI.global.LoginActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UI.global.MainActivity" />
         <activity
-            android:name=".RegistrarActivity"
+            android:name=".UI.global.RegistrarActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UI.global.MainActivity" />
         <activity
-            android:name=".AgregarInmuebleActivity"
+            android:name=".UI.propietario.AgregarInmuebleActivity"
             android:exported="true"
-            android:parentActivityName=".InicioPropietarioActivity" />
+            android:parentActivityName=".UI.propietario.InicioPropietarioActivity" />
         <activity
-            android:name=".MapsActivity"
+            android:name=".UI.propietario.MapsActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.global.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

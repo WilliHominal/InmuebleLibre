@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConfiguracionCuentaActivity">
+    tools:context=".UI.global.ConfiguracionCuentaActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/CONFIG_toolbar"
