@@ -255,8 +255,6 @@
                 android:layout_gravity="bottom"
                 android:textSize="17sp"/>
 
-
-
     </LinearLayout>
 
     <LinearLayout

@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.UI.global.MainActivity;
 import com.mmw.inmueblelibre.R;
 import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
+import com.mmw.inmueblelibre.UI.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 
@@ -99,6 +100,21 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
 
             return false;
         });
+
+        adaptadorListaInmuebles.setOnItemClickListener(new InmuebleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                String tipoUsuario = "CLIENTE";
+                String idInmueble = adaptadorListaInmuebles.getInmuebleId(position);
+
+                Intent intent = new Intent(ListaInmueblesClienteActivity.this, VerDetallesInmuebleActivity.class);
+                intent.putExtra("tipo_usuario", tipoUsuario);
+                intent.putExtra("id_inmueble", idInmueble);
+                intent.putExtra("estado_inmueble", "CREADO");
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

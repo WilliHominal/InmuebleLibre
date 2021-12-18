@@ -30,7 +30,9 @@ import com.mmw.inmueblelibre.model.ListaCiudadesModel;
 import com.mmw.inmueblelibre.model.ListaProvinciasModel;
 import com.mmw.inmueblelibre.repository.CiudadesRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -184,7 +186,9 @@ public class AgregarInmuebleActivity extends AppCompatActivity implements OnMapR
         mapaValores.put("provincia", provinciasSpinner.getSelectedItem().toString());
         mapaValores.put("ciudad", ciudadesSpinner.getSelectedItem().toString());
         mapaValores.put("direccion", ubiSeleccionada.toString());
-        mapaValores.put("fecha_alta", "");
+        SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+        String fechaAlta = ISO_8601_FORMAT.format(new Date());
+        mapaValores.put("fecha_alta", fechaAlta);
         mapaValores.put("fecha_reserva", "");
         mapaValores.put("fecha_venta", "");
         mapaValores.put("estado", "CREADO");
