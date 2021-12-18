@@ -2,9 +2,12 @@ package com.mmw.inmueblelibre.UI.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,13 +21,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.UI.propietario.AgregarInmuebleActivity;
+import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
 
-public class VerDetallesInmuebleActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+public class VerDetallesInmuebleActivity extends AppCompatActivity implements View.OnClickListener {
 
     LinearLayout vistaReservadoPropietarios;
     LinearLayout reservarBtnLayout;
     LinearLayout fechaVentaLayout;
     LinearLayout fechaReservaLayout;
+    LinearLayout venderBtnLayout;
+    Button reservarBtn;
     Button venderBtn;
 
     TextView descripcionTV;
@@ -68,9 +81,26 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity {
 
         vistaReservadoPropietarios = findViewById(R.id.DETALLES_datoscliente_reserva);
         reservarBtnLayout = findViewById(R.id.DETALLES_reservar_btn_LL);
+        reservarBtn = findViewById(R.id.DETALLES_reservar_BTN);
+        venderBtnLayout = findViewById(R.id.DETALLES_vender_btn_LL);
         venderBtn = findViewById(R.id.DETALLES_vender_BTN);
 
+        reservarBtn.setOnClickListener(this);
+        venderBtn.setOnClickListener(this);
+
         setearVisibilidadSegunDatos();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.DETALLES_reservar_BTN:
+                reservarInmueble();
+                break;
+            case R.id.DETALLES_vender_BTN:
+                venderInmueble();
+                break;
+        }
     }
 
     private void setearVisibilidadSegunDatos(){
@@ -78,9 +108,10 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("tipo_usuario").equals("PROPIETARIO")){
             //SI EL INMUEBLE ESTA RESERVADO
             if (getIntent().getStringExtra("estado_inmueble").equals("RESERVADO")) {
+                Toast.makeText(getApplicationContext(), "INMUEBLE RESERVADO - PROPIETARIO", Toast.LENGTH_SHORT).show();
                 vistaReservadoPropietarios.setVisibility(View.VISIBLE);
                 fechaReservaLayout.setVisibility(View.VISIBLE);
-                venderBtn.setVisibility(View.VISIBLE);
+                venderBtnLayout.setVisibility(View.VISIBLE);
                 obtenerInfo(0);
             }
             //SI EL INMUEBLE ESTA VENDIDO
@@ -189,5 +220,51 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
+    private void reservarInmueble() {
+
+        String idCliente = firebaseAuth.getCurrentUser().getUid();
+        String idInmueble = getIntent().getStringExtra("id_inmueble");
+        SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+        String fechaReserva = ISO_8601_FORMAT.format(new Date());
+        Map<String, Object> mapaValores = new HashMap<>();
+        mapaValores.put("id_cliente", idCliente);
+        mapaValores.put("fecha_reserva", fechaReserva);
+        mapaValores.put("estado", "RESERVADO");
+
+        databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+            if (taskDB.isSuccessful()){
+                Toast.makeText(getApplicationContext(), "Inmueble reservado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo reservar el inmueble", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void venderInmueble() {
+
+        String idInmueble = getIntent().getStringExtra("id_inmueble");
+        SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+        String fechaVenta = ISO_8601_FORMAT.format(new Date());
+        Map<String, Object> mapaValores = new HashMap<>();
+        mapaValores.put("fecha_venta", fechaVenta);
+        mapaValores.put("estado", "VENDIDO");
+
+        databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+            if (taskDB.isSuccessful()){
+                Toast.makeText(getApplicationContext(), "Inmueble vendido", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo vender el inmueble", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
