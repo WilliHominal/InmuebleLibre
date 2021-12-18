@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.UI.global.MainActivity;
 import com.mmw.inmueblelibre.R;
 import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
+import com.mmw.inmueblelibre.UI.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 
@@ -98,6 +99,20 @@ public class ListaVendidosPropietarioActivity extends AppCompatActivity {
         });
 
         obtenerInfoUsuario();
+
+        adaptadorListaVendidos.setOnItemClickListener(new InmuebleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                String tipoUsuario = "PROPIETARIO";
+                String idInmueble = adaptadorListaVendidos.getInmuebleId(position);
+
+                Intent intent = new Intent(ListaVendidosPropietarioActivity.this, VerDetallesInmuebleActivity.class);
+                intent.putExtra("tipo_usuario", tipoUsuario);
+                intent.putExtra("id_inmueble", idInmueble);
+                intent.putExtra("estado_inmueble", "VENDIDO");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

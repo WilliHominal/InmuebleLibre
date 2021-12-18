@@ -258,7 +258,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
         databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
             if (taskDB.isSuccessful()){
                 Toast.makeText(getApplicationContext(), "Inmueble vendido", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
+                startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
                 finish();
             } else {
                 Toast.makeText(getApplicationContext(), "No se pudo vender el inmueble", Toast.LENGTH_SHORT).show();
