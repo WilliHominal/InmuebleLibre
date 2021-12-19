@@ -110,7 +110,6 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
         if (getIntent().getStringExtra("tipo_usuario").equals("PROPIETARIO")){
             //SI EL INMUEBLE ESTA RESERVADO
             if (getIntent().getStringExtra("estado_inmueble").equals("RESERVADO")) {
-                Toast.makeText(getApplicationContext(), "INMUEBLE RESERVADO - PROPIETARIO", Toast.LENGTH_SHORT).show();
                 vistaReservadoPropietarios.setVisibility(View.VISIBLE);
                 fechaReservaLayout.setVisibility(View.VISIBLE);
                 venderBtnLayout.setVisibility(View.VISIBLE);
