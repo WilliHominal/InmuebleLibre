@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre.UI.global;
+package com.mmw.inmueblelibre.ui.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,21 +7,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mmw.inmueblelibre.R;
-import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
-import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
+import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseFirebase;
+    private FirebaseMessaging firebaseMessaging;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
+        firebaseMessaging = FirebaseMessaging.getInstance();
     }
 
     @Override
@@ -87,10 +96,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void loguearUsuario(){
         firebaseAuth.signInWithEmailAndPassword(email, contrasena).addOnCompleteListener(task -> {
            if (task.isSuccessful()){
+               updatearToken();
                cargarMenuSegunTipoUsuario();
            } else {
                Toast.makeText(getApplicationContext(), "Datos no válidos", Toast.LENGTH_SHORT).show();
            }
+        });
+    }
+
+    private void updatearToken(){
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        firebaseMessaging.getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("Error FCM token", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
+
+                Map<String, Object> mapaValores = new HashMap<>();
+
+                String token = task.getResult();
+
+                mapaValores.put("token_fcm", token);
+
+                databaseFirebase.child("Usuarios").child(id).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+                    if (!taskDB.isSuccessful()){
+                        Toast.makeText(getApplicationContext(), "No se pudo actualizar el token", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
     }
 

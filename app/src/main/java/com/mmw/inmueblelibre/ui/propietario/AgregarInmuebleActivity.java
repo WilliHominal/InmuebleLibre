@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre.UI.propietario;
+package com.mmw.inmueblelibre.ui.propietario;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;

@@ -1,13 +1,11 @@
-package com.mmw.inmueblelibre.UI.global;
+package com.mmw.inmueblelibre.ui.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,9 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.R;
-import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
-import com.mmw.inmueblelibre.UI.propietario.AgregarInmuebleActivity;
-import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
+import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
+import com.mmw.inmueblelibre.repository.MensajesFirebaseRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,10 +54,14 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseFirebase;
 
+    MensajesFirebaseRepository mensajesRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_detalles_inmueble);
+
+        mensajesRepository = new MensajesFirebaseRepository();
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
@@ -236,6 +238,25 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
         databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
             if (taskDB.isSuccessful()){
+
+                databaseFirebase.child("Inmuebles").child(idInmueble).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            String idPropietario = snapshot.child("id_propietario").getValue().toString();
+                            String tituloNotificacion = "INMUEBLE LIBRE - NUEVA RESERVA";
+                            String mensajeNotificacion = "Han solicitado una reserva del inmueble " + idInmueble + ".";
+
+                            enviarNotificacion(idPropietario, tituloNotificacion, mensajeNotificacion);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 Toast.makeText(getApplicationContext(), "Inmueble reservado", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
                 finish();
@@ -257,6 +278,25 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
         databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
             if (taskDB.isSuccessful()){
+
+                databaseFirebase.child("Inmuebles").child(idInmueble).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            String idCliente = snapshot.child("id_cliente").getValue().toString();
+                            String tituloNotificacion = "INMUEBLE LIBRE - COMPRA FINALIZADA";
+                            String mensajeNotificacion = "El propietario del inmueble " + idInmueble + " ha aceptado su reserva, finalizando su compra del inmueble.";
+
+                            enviarNotificacion(idCliente, tituloNotificacion, mensajeNotificacion);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 Toast.makeText(getApplicationContext(), "Inmueble vendido", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
                 finish();
@@ -267,4 +307,28 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
     }
 
+    private void enviarNotificacion(String idReceptor, String titulo, String mensaje){
+
+        databaseFirebase.child("Usuarios").child(idReceptor).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String token_fcm = snapshot.child("token_fcm").getValue().toString();
+
+                    mensajesRepository.enviarMensaje(token_fcm, titulo, mensaje, exito -> {
+                        if (exito){
+                            Log.d("RESPUESTA_MENSAJE", "GOD");
+                        } else {
+                            Log.d("RESPUESTA_MENSAJE", "NO GOD");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("NOTIFICACION", "ERROR?" + error.toString());
+            }
+        });
+    }
 }

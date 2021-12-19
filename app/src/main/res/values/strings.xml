@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Inmueble Libre</string>
+    <string name="default_notification_channel_id">0</string>
 </resources>

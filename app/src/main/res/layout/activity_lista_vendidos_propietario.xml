@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UI.propietario.ListaVendidosPropietarioActivity">
+        tools:context=".ui.propietario.ListaVendidosPropietarioActivity">
 
         <include layout="@layout/toolbar"
             android:id="@+id/LVP_toolbar"

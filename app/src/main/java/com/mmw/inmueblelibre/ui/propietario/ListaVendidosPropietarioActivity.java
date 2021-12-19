@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre.UI.propietario;
+package com.mmw.inmueblelibre.ui.propietario;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,17 +23,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mmw.inmueblelibre.UI.global.MainActivity;
+import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.ui.global.MainActivity;
 import com.mmw.inmueblelibre.R;
-import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
-import com.mmw.inmueblelibre.UI.global.VerDetallesInmuebleActivity;
+import com.mmw.inmueblelibre.ui.global.ConfiguracionCuentaActivity;
+import com.mmw.inmueblelibre.ui.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ListaReservasPropietarioActivity extends AppCompatActivity {
+public class ListaVendidosPropietarioActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -42,29 +46,29 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView menuDrawer;
 
-    RecyclerView.LayoutManager reservasLayoutManager;
-    RecyclerView listaReservasRV;
-    InmuebleAdapter adaptadorListaReservas;
+    RecyclerView.LayoutManager vendidosLayoutManager;
+    RecyclerView listaVendidosRV;
+    InmuebleAdapter adaptadorListaVendidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_reservas_propietario);
+        setContentView(R.layout.activity_lista_vendidos_propietario);
 
-        toolbar = findViewById(R.id.LRP_toolbar);
+        toolbar = findViewById(R.id.LVP_toolbar);
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.LRP_drawer_layout);
-        menuDrawer = (NavigationView) findViewById(R.id.LRP_menu_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.LVP_drawer_layout);
+        menuDrawer = (NavigationView) findViewById(R.id.LVP_menu_drawer);
 
-        listaReservasRV = findViewById(R.id.LRP_listaInmuebles);
-        reservasLayoutManager = new LinearLayoutManager(this);
-        listaReservasRV.setLayoutManager(reservasLayoutManager);
-        adaptadorListaReservas = new InmuebleAdapter(new ArrayList<>());
-        listaReservasRV.setAdapter(adaptadorListaReservas);
+        listaVendidosRV = findViewById(R.id.LVP_listaInmuebles);
+        vendidosLayoutManager = new LinearLayoutManager(this);
+        listaVendidosRV.setLayoutManager(vendidosLayoutManager);
+        adaptadorListaVendidos = new InmuebleAdapter(new ArrayList<>());
+        listaVendidosRV.setAdapter(adaptadorListaVendidos);
         obtenerLista();
 
         //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
@@ -74,24 +78,22 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()){
                 case R.id.MENUPROP_menu_principal_opc:
-                    startActivity(new Intent(ListaReservasPropietarioActivity.this, InicioPropietarioActivity.class));
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, InicioPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_listar_reservas_opc:
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, ListaReservasPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_listar_vendidos_opc:
-                    startActivity(new Intent(ListaReservasPropietarioActivity.this, ListaVendidosPropietarioActivity.class));
                     break;
 
                 case R.id.MENUPROP_mi_cuenta_opc:
-                    startActivity(new Intent(ListaReservasPropietarioActivity.this, ConfiguracionCuentaActivity.class));
+                    startActivity(new Intent(ListaVendidosPropietarioActivity.this, ConfiguracionCuentaActivity.class));
                     break;
 
                 case R.id.MENUPROP_cerrar_sesion_opc:
-                    firebaseAuth.signOut();
-                    startActivity(new Intent(ListaReservasPropietarioActivity.this, MainActivity.class));
-                    finish();
+                    cerrarSesion();
                     break;
             }
 
@@ -100,17 +102,34 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
 
         obtenerInfoUsuario();
 
-        adaptadorListaReservas.setOnItemClickListener(new InmuebleAdapter.OnItemClickListener() {
+        adaptadorListaVendidos.setOnItemClickListener(new InmuebleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 String tipoUsuario = "PROPIETARIO";
-                String idInmueble = adaptadorListaReservas.getInmuebleId(position);
+                String idInmueble = adaptadorListaVendidos.getInmuebleId(position);
 
-                Intent intent = new Intent(ListaReservasPropietarioActivity.this, VerDetallesInmuebleActivity.class);
+                Intent intent = new Intent(ListaVendidosPropietarioActivity.this, VerDetallesInmuebleActivity.class);
                 intent.putExtra("tipo_usuario", tipoUsuario);
                 intent.putExtra("id_inmueble", idInmueble);
-                intent.putExtra("estado_inmueble", "RESERVADO");
+                intent.putExtra("estado_inmueble", "VENDIDO");
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void cerrarSesion(){
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        Map<String, Object> mapaValores = new HashMap<>();
+        mapaValores.put("token_fcm", "");
+
+        databaseFirebase.child("Usuarios").child(id).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+            if (taskDB.isSuccessful()){
+                firebaseAuth.signOut();
+                startActivity(new Intent(ListaVendidosPropietarioActivity.this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo actualizar el token", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -137,7 +156,7 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    List<InmuebleModel> listaReservas = new ArrayList<>();
+                    List<InmuebleModel> listaVendidos = new ArrayList<>();
 
                     for (DataSnapshot snap : snapshot.getChildren()){
                         String id = snap.getKey();
@@ -147,15 +166,15 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
                         String estado = snap.child("estado").getValue().toString();
 
                         if (!idProp.equals(firebaseAuth.getCurrentUser().getUid())) continue;
-                        if (!estado.equals("RESERVADO")) continue;
+                        if (!estado.equals("VENDIDO")) continue;
 
                         InmuebleModel inmTemp = new InmuebleModel(id, direccion, precio);
 
-                        listaReservas.add(inmTemp);
+                        listaVendidos.add(inmTemp);
 
                     }
-                    adaptadorListaReservas = new InmuebleAdapter(listaReservas);
-                    listaReservasRV.setAdapter(adaptadorListaReservas);
+                    adaptadorListaVendidos = new InmuebleAdapter(listaVendidos);
+                    listaVendidosRV.setAdapter(adaptadorListaVendidos);
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre.UI.propietario;
+package com.mmw.inmueblelibre.ui.propietario;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

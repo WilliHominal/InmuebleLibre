@@ -1,4 +1,4 @@
-package com.mmw.inmueblelibre.UI.cliente;
+package com.mmw.inmueblelibre.ui.cliente;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,17 +23,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mmw.inmueblelibre.UI.global.MainActivity;
+import com.mmw.inmueblelibre.ui.global.MainActivity;
 import com.mmw.inmueblelibre.R;
-import com.mmw.inmueblelibre.UI.global.ConfiguracionCuentaActivity;
-import com.mmw.inmueblelibre.UI.global.VerDetallesInmuebleActivity;
+import com.mmw.inmueblelibre.ui.global.ConfiguracionCuentaActivity;
+import com.mmw.inmueblelibre.ui.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.adapter.InmuebleAdapter;
 import com.mmw.inmueblelibre.model.InmuebleModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ListaInmueblesClienteActivity extends AppCompatActivity {
+public class ListaCompradosClienteActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -49,15 +52,15 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_inmuebles_cliente);
+        setContentView(R.layout.activity_lista_comprados_cliente);
 
-        toolbar = findViewById(R.id.LIC_toolbar);
+        toolbar = findViewById(R.id.LCC_toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.LIC_drawer_layout);
-        menuDrawer = (NavigationView) findViewById(R.id.LIC_menu_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.LCC_drawer_layout);
+        menuDrawer = (NavigationView) findViewById(R.id.LCC_menu_drawer);
 
-        listaInmueblesRV = findViewById(R.id.LIC_listaInmuebles);
+        listaInmueblesRV = findViewById(R.id.LCC_listaInmuebles);
         inmueblesLayoutManager = new LinearLayoutManager(this);
         listaInmueblesRV.setLayoutManager(inmueblesLayoutManager);
         adaptadorListaInmuebles = new InmuebleAdapter(new ArrayList<>());
@@ -76,25 +79,22 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()) {
                 case R.id.MENUCLI_menu_principal_opc:
-                    startActivity(new Intent(ListaInmueblesClienteActivity.this, InicioClienteActivity.class));
+                    startActivity(new Intent(ListaCompradosClienteActivity.this, InicioClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_listar_inmuebles_opc:
+                    startActivity(new Intent(ListaCompradosClienteActivity.this, ListaInmueblesClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_listar_comprados_opc:
-                    startActivity(new Intent(ListaInmueblesClienteActivity.this, ListaCompradosClienteActivity.class));
                     break;
 
                 case R.id.MENUCLI_mi_cuenta_opc:
-                    startActivity(new Intent(ListaInmueblesClienteActivity.this, ConfiguracionCuentaActivity.class));
+                    startActivity(new Intent(ListaCompradosClienteActivity.this, ConfiguracionCuentaActivity.class));
                     break;
 
                 case R.id.MENUCLI_cerrar_sesion_opc:
-                    //CIERRA SESION Y DEVUELVE AL MENÚ INICIAL
-                    firebaseAuth.signOut();
-                    startActivity(new Intent(ListaInmueblesClienteActivity.this, MainActivity.class));
-                    finish();
+                    cerrarSesion();
                     break;
             }
 
@@ -107,14 +107,30 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
                 String tipoUsuario = "CLIENTE";
                 String idInmueble = adaptadorListaInmuebles.getInmuebleId(position);
 
-                Intent intent = new Intent(ListaInmueblesClienteActivity.this, VerDetallesInmuebleActivity.class);
+                Intent intent = new Intent(ListaCompradosClienteActivity.this, VerDetallesInmuebleActivity.class);
                 intent.putExtra("tipo_usuario", tipoUsuario);
                 intent.putExtra("id_inmueble", idInmueble);
-                intent.putExtra("estado_inmueble", "CREADO");
+                intent.putExtra("estado_inmueble", "VENDIDO");
                 startActivity(intent);
             }
         });
+    }
 
+    private void cerrarSesion(){
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        Map<String, Object> mapaValores = new HashMap<>();
+        mapaValores.put("token_fcm", "");
+
+        databaseFirebase.child("Usuarios").child(id).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+            if (taskDB.isSuccessful()){
+                firebaseAuth.signOut();
+                startActivity(new Intent(ListaCompradosClienteActivity.this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo actualizar el token", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -166,12 +182,15 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
 
                     for (DataSnapshot snap : snapshot.getChildren()){
                         String id = snap.getKey();
+                        String idActual = firebaseAuth.getCurrentUser().getUid();
 
                         String estado = snap.child("estado").getValue().toString();
                         String precio = snap.child("precio").getValue().toString();
                         String direccion = (snap.child("direccion").getValue().toString().split(": "))[1];
+                        String idCliente = snap.child("id_cliente").getValue().toString();
 
-                        if (!estado.equals("CREADO")) continue;
+                        if (!idActual.equals(idCliente)) continue;
+                        if (!estado.equals("VENDIDO")) continue;
 
                         InmuebleModel inmTemp = new InmuebleModel(id, direccion, precio);
 

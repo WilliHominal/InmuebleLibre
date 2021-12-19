@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.propietario.AgregarInmuebleActivity">
+    tools:context=".ui.propietario.AgregarInmuebleActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/AI_toolbar"

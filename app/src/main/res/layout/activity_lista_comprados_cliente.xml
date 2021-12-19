@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UI.cliente.ListaCompradosClienteActivity">
+        tools:context=".ui.cliente.ListaCompradosClienteActivity">
 
         <include layout="@layout/toolbar"
             android:id="@+id/LCC_toolbar"

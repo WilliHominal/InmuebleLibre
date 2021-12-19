@@ -1,11 +1,13 @@
-package com.mmw.inmueblelibre.UI.global;
+package com.mmw.inmueblelibre.ui.global;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +15,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mmw.inmueblelibre.R;
 
 import java.util.HashMap;
@@ -40,6 +45,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseFirebase;
+    FirebaseMessaging firebaseMessaging;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseFirebase = FirebaseDatabase.getInstance().getReference();
+        firebaseMessaging = FirebaseMessaging.getInstance();
     }
 
     @Override
@@ -106,21 +113,50 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
                mapaValores.put("contrasena", contrasena);
                mapaValores.put("tipo", tipo);
                mapaValores.put("dni", dni);
+               mapaValores.put("token_fcm", "");
 
                String id = firebaseAuth.getCurrentUser().getUid();
 
                databaseFirebase.child("Usuarios").child(id).setValue(mapaValores).addOnCompleteListener(taskDB -> {
                    if (taskDB.isSuccessful()){
-                       startActivity(new Intent(RegistrarActivity.this, MainActivity.class));
+                       startActivity(new Intent(RegistrarActivity.this, LoginActivity.class));
                        finish();
                    } else {
                        Toast.makeText(getApplicationContext(), "No se pudieron crear los datos correctamente", Toast.LENGTH_SHORT).show();
                    }
                });
 
+               updatearToken();
+
            } else {
                Toast.makeText(getApplicationContext(), "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
            }
+        });
+    }
+
+    private void updatearToken(){
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        firebaseMessaging.getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("Error FCM token", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
+
+                Map<String, Object> mapaValores = new HashMap<>();
+
+                String token = task.getResult();
+
+                mapaValores.put("token_fcm", token);
+
+                databaseFirebase.child("Usuarios").child(id).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+                    if (!taskDB.isSuccessful()){
+                        Toast.makeText(getApplicationContext(), "No se pudo actualizar el token", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
     }
 }

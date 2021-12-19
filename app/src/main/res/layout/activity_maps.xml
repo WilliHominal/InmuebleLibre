@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI.propietario.MapsActivity">
+    tools:context=".ui.propietario.MapsActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/MA_toolbar"/>

@@ -1,6 +1,9 @@
-package com.mmw.inmueblelibre.UI.global;
+package com.mmw.inmueblelibre.ui.global;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.R;
-import com.mmw.inmueblelibre.UI.cliente.InicioClienteActivity;
-import com.mmw.inmueblelibre.UI.propietario.InicioPropietarioActivity;
+import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        crearCanalNotificaciones();
 
         toolbar = findViewById(R.id.MAIN_toolbar);
         setSupportActionBar(toolbar);
@@ -93,5 +98,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
+
+    private void crearCanalNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "NOTIFICACIONES";
+            String description = "Canal de notificaciones";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("0", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
