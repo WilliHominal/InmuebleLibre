@@ -1,10 +1,16 @@
 package com.mmw.inmueblelibre;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -41,6 +47,7 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
         Log.d(TAG, "getPriority: " + remoteMessage.getPriority());
         Log.d(TAG, "getSentTime: " + remoteMessage.getSentTime());
         Log.d(TAG, "getTtl: " + remoteMessage.getTtl());*/
+        createNotificationChannel();
         Map<String,String> datos = remoteMessage.getData();
         for(Map.Entry<String,String> entrada : datos.entrySet()){
             Log.d(TAG, entrada.getKey() +" -> "+ entrada.getValue() );
@@ -51,6 +58,7 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
         }
 
         ShowToastInIntentService(remoteMessage.getData().toString());
+        crearNotificacion(remoteMessage.getData().toString());
 
     }
 
@@ -70,4 +78,39 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
     private void sendRegistrationToServer(String token){
         Log.d(TAG, "ENVIAR token: " + token);
     }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.name_channel);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("999", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void crearNotificacion(String contenido)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "999")
+                .setSmallIcon(R.drawable.icon_add)
+                .setContentTitle("Nuevas noticias sobre tus inmuebles")
+                .setContentText(contenido)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(contenido))
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(666, builder.build());
+
+
+    }
+
 }
