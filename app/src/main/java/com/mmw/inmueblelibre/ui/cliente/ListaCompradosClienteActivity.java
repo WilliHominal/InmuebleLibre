@@ -55,6 +55,7 @@ public class ListaCompradosClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_comprados_cliente);
 
         toolbar = findViewById(R.id.LCC_toolbar);
+        toolbar.setTitle("INMUEBLES COMPRADOS");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.LCC_drawer_layout);

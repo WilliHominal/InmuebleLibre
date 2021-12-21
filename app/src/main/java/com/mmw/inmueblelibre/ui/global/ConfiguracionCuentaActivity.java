@@ -47,6 +47,7 @@ public class ConfiguracionCuentaActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_configuracion_cuenta);
 
         toolbar = findViewById(R.id.CONFIG_toolbar);
+        toolbar.setTitle("MODIFICAR USUARIO");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) ab.setDisplayHomeAsUpEnabled(true);

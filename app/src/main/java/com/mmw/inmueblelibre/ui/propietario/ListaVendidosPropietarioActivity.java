@@ -56,6 +56,7 @@ public class ListaVendidosPropietarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_vendidos_propietario);
 
         toolbar = findViewById(R.id.LVP_toolbar);
+        toolbar.setTitle("INMUEBLES VENDIDOS");
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();

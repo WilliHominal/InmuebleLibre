@@ -56,6 +56,7 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_reservas_propietario);
 
         toolbar = findViewById(R.id.LRP_toolbar);
+        toolbar.setTitle("LISTA DE RESERVAS");
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();

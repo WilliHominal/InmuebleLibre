@@ -59,6 +59,7 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_inicio_propietario);
 
         toolbar = findViewById(R.id.INICIOPROP_toolbar);
+        toolbar.setTitle("MENU PRINCIPAL");
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();

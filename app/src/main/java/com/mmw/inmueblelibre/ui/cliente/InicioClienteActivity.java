@@ -55,6 +55,7 @@ public class InicioClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_cliente);
 
         toolbar = findViewById(R.id.INICIOCLI_toolbar);
+        toolbar.setTitle("MENU PRINCIPAL");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.INICIOCLI_drawer_layout);

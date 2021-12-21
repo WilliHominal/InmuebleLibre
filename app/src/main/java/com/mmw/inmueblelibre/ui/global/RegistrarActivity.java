@@ -53,6 +53,7 @@ public class RegistrarActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_registrar);
 
         toolbar = findViewById(R.id.REGISTRAR_toolbar);
+        toolbar.setTitle("REGISTRO DE USUARIO");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) ab.setDisplayHomeAsUpEnabled(true);

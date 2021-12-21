@@ -55,6 +55,7 @@ public class ListaInmueblesClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_inmuebles_cliente);
 
         toolbar = findViewById(R.id.LIC_toolbar);
+        toolbar.setTitle("LISTA DE INMUEBLES");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.LIC_drawer_layout);

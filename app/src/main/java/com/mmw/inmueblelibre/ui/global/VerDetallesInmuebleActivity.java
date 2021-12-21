@@ -1,11 +1,14 @@
 package com.mmw.inmueblelibre.ui.global;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -37,6 +40,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
     LinearLayout venderBtnLayout;
     Button reservarBtn;
     Button venderBtn;
+    Toolbar toolbar;
 
     TextView descripcionTV;
     TextView nombrePropietarioTV;
@@ -59,7 +63,13 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ver_detalles_inmueble);
+        toolbar = findViewById(R.id.DETALLES_toolbar);
+        toolbar.setTitle("DETALLES DEL INMUEBLE");
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
 
         mensajesRepository = new MensajesFirebaseRepository();
 
@@ -91,6 +101,16 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
         venderBtn.setOnClickListener(this);
 
         setearVisibilidadSegunDatos();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                volverAtras();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -327,6 +347,30 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("NOTIFICACION", "ERROR?" + error.toString());
+            }
+        });
+    }
+
+    private void volverAtras(){
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        databaseFirebase.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String tipo = snapshot.child("tipo").getValue().toString();
+
+                    if (tipo.equals("PROPIETARIO")){
+                        startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
+                    } else {
+                        startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
