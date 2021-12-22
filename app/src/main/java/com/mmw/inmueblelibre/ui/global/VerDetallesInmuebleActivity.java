@@ -263,7 +263,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
                             String idPropietario = snapshot.child("id_propietario").getValue().toString();
-                            String tituloNotificacion = "INMUEBLE LIBRE - NUEVA RESERVA";
+                            String tituloNotificacion = "NUEVA RESERVA";
                             String mensajeNotificacion = "Han solicitado una reserva del inmueble " + idInmueble + ".";
 
                             enviarNotificacion(idPropietario, tituloNotificacion, mensajeNotificacion);
@@ -303,8 +303,8 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
                             String idCliente = snapshot.child("id_cliente").getValue().toString();
-                            String tituloNotificacion = "INMUEBLE LIBRE - COMPRA FINALIZADA";
-                            String mensajeNotificacion = "El propietario del inmueble " + idInmueble + " ha aceptado su reserva, finalizando su compra del inmueble.";
+                            String tituloNotificacion = "COMPRA FINALIZADA";
+                            String mensajeNotificacion = "El propietario " + nombrePropietarioTV.getText().toString() + " ha aceptado su reserva del inmueble " + idInmueble + ".";
 
                             enviarNotificacion(idCliente, tituloNotificacion, mensajeNotificacion);
                         }
@@ -336,9 +336,9 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
                     mensajesRepository.enviarMensaje(token_fcm, titulo, mensaje, exito -> {
                         if (exito){
-                            Log.d("RESPUESTA_MENSAJE", "GOD");
+                            Log.d("RESPUESTA_MENSAJE", "Mensaje enviado");
                         } else {
-                            Log.d("RESPUESTA_MENSAJE", "NO GOD");
+                            Log.d("RESPUESTA_MENSAJE", "Error al enviar mensaje");
                         }
                     });
                 }
@@ -346,7 +346,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("NOTIFICACION", "ERROR?" + error.toString());
+                Log.d("RESPUESTA_MENSAJE", "Error al obtener datos de Firebase Database" + error.toString());
             }
         });
     }
