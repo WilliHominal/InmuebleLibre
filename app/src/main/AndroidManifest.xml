@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmuebleLibre">
         <activity
+            android:name=".ui.propietario.ModificarInmuebleActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.global.VerDetallesInmuebleActivity"
             android:exported="true" />
         <activity
@@ -74,9 +77,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/icon_notificaciones" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />

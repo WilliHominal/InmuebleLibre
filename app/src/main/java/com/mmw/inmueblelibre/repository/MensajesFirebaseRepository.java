@@ -18,8 +18,8 @@ public class MensajesFirebaseRepository {
         mensajesAPI = BuilderAPI.getInstancia().getMensajesFirebaseAPI();
     }
 
-    public void enviarMensaje (String receptor, String titulo, String texto, EnviarMensajeCallback callback){
-        MensajeFirebaseModel mensaje = new MensajeFirebaseModel(receptor, titulo, texto);
+    public void enviarMensaje (String receptor, String titulo, String texto, String tipoCliente, String idInmueble, EnviarMensajeCallback callback){
+        MensajeFirebaseModel mensaje = new MensajeFirebaseModel(receptor, titulo, texto, tipoCliente, idInmueble);
 
         Call<MensajeFirebaseModel> llamada = mensajesAPI.enviarMensajeFirebase(mensaje);
         llamada.enqueue(new Callback<MensajeFirebaseModel>() {

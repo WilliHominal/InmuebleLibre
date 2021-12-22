@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <app:item android:id="@+id/menu_modificar_opt"
+        android:title="Opciones"
+        android:icon="@drawable/icon_modificar"
+        android:orderInCategory="1"
+        app:showAsAction="always"/>
+    <app:item android:id="@+id/menu_eliminar_opt"
+        android:title="Opciones"
+        android:icon="@drawable/icon_eliminar"
+        android:orderInCategory="2"
+        app:showAsAction="always"/>
+</menu>

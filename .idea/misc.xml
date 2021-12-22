@@ -17,6 +17,7 @@
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_maps.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_modificar_inmueble.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_registrar.xml" value="0.20520833333333333" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/activity_ver_detalles_inmueble.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/layout/drawer_header_cliente.xml" value="0.36666666666666664" />
@@ -26,6 +27,8 @@
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_cliente.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_propietario.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_toolbar_ver_detalles.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/menu/menu_toolbar_ver_detalles_cliente.xml" value="0.36666666666666664" />
         <entry key="..\:/Android-Studio-Projects/InmuebleLibre/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.228125" />
         <entry key="..\:/Users/Kreptile/Desktop/InmuebleLibre/app/src/main/res/layout/activity_ver_detalles_inmueble.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Kreptile/Desktop/InmuebleLibre/app/src/main/res/layout/vista_inmueble.xml" value="0.20520833333333333" />

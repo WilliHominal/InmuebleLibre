@@ -2,12 +2,14 @@ package com.mmw.inmueblelibre.ui.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import com.mmw.inmueblelibre.R;
 import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
 import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
 import com.mmw.inmueblelibre.repository.MensajesFirebaseRepository;
+import com.mmw.inmueblelibre.ui.propietario.ModificarInmuebleActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,7 +69,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
         setContentView(R.layout.activity_ver_detalles_inmueble);
         toolbar = findViewById(R.id.DETALLES_toolbar);
-        toolbar.setTitle("DETALLES DEL INMUEBLE");
+        toolbar.setTitle("DETALLES");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
@@ -104,11 +107,33 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (getIntent().getStringExtra("tipo_usuario").equals("PROPIETARIO") && getIntent().getStringExtra("estado_inmueble").equals("CREADO"))
+            getMenuInflater().inflate(R.menu.menu_toolbar_ver_detalles_propietario, menu);
+        else if (getIntent().getStringExtra("tipo_usuario").equals("CLIENTE") && getIntent().getStringExtra("estado_inmueble").equals("RESERVADO"))
+            getMenuInflater().inflate(R.menu.menu_toolbar_ver_detalles_cliente, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 volverAtras();
                 return true;
+            case R.id.menu_modificar_opt:
+                Intent intent = new Intent(VerDetallesInmuebleActivity.this, ModificarInmuebleActivity.class);
+                intent.putExtra("id_inmueble", getIntent().getStringExtra("id_inmueble"));
+                startActivity(intent);
+                break;
+            case R.id.menu_eliminar_opt:
+                if (getIntent().getStringExtra("tipo_usuario").equals("PROPIETARIO")){
+                    eliminarInmueble();
+                } else {
+                    cancelarReserva();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -266,7 +291,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                             String tituloNotificacion = "NUEVA RESERVA";
                             String mensajeNotificacion = "Han solicitado una reserva del inmueble " + idInmueble + ".";
 
-                            enviarNotificacion(idPropietario, tituloNotificacion, mensajeNotificacion);
+                            enviarNotificacion(idPropietario, tituloNotificacion, mensajeNotificacion, "PROPIETARIO", idInmueble);
                         }
                     }
 
@@ -306,7 +331,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                             String tituloNotificacion = "COMPRA FINALIZADA";
                             String mensajeNotificacion = "El propietario " + nombrePropietarioTV.getText().toString() + " ha aceptado su reserva del inmueble " + idInmueble + ".";
 
-                            enviarNotificacion(idCliente, tituloNotificacion, mensajeNotificacion);
+                            enviarNotificacion(idCliente, tituloNotificacion, mensajeNotificacion, "CLIENTE", idInmueble);
                         }
                     }
 
@@ -326,7 +351,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
     }
 
-    private void enviarNotificacion(String idReceptor, String titulo, String mensaje){
+    private void enviarNotificacion(String idReceptor, String titulo, String mensaje, String tipoCliente, String idInmueble){
 
         databaseFirebase.child("Usuarios").child(idReceptor).addValueEventListener(new ValueEventListener() {
             @Override
@@ -334,7 +359,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                 if (snapshot.exists()){
                     String token_fcm = snapshot.child("token_fcm").getValue().toString();
 
-                    mensajesRepository.enviarMensaje(token_fcm, titulo, mensaje, exito -> {
+                    mensajesRepository.enviarMensaje(token_fcm, titulo, mensaje, tipoCliente, idInmueble, exito -> {
                         if (exito){
                             Log.d("RESPUESTA_MENSAJE", "Mensaje enviado");
                         } else {
@@ -349,6 +374,54 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                 Log.d("RESPUESTA_MENSAJE", "Error al obtener datos de Firebase Database" + error.toString());
             }
         });
+    }
+
+    private void eliminarInmueble(){
+        String idInmueble = getIntent().getStringExtra("id_inmueble");
+
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_delete)
+                .setTitle("ELIMINAR")
+                .setMessage("Quieres eliminar el inmueble?")
+                .setPositiveButton("ACEPTAR", (dialog, i) -> {
+                    databaseFirebase.child("Inmuebles").child(idInmueble).removeValue().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "Inmueble eliminado", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No se pudo eliminar el inmueble", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("CANCELAR", null)
+                .show();
+    }
+
+    private void cancelarReserva(){
+        String idInmueble = getIntent().getStringExtra("id_inmueble");
+
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_delete)
+                .setTitle("CANCELAR")
+                .setMessage("Quieres cancelar la reserva?")
+                .setPositiveButton("ACEPTAR", (dialog, i) -> {
+                    Map<String, Object> mapaValores = new HashMap<>();
+                    mapaValores.put("id_cliente", "");
+                    mapaValores.put("fecha_reserva", "");
+                    mapaValores.put("estado", "CREADO");
+
+                    databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "Reserva cancelada", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No se pudo cancelar la reserva", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                })
+                .setNegativeButton("CANCELAR", null)
+                .show();
     }
 
     private void volverAtras(){
