@@ -8,9 +8,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,17 +56,21 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
 
     EditText descripcionInmuebleET;
     EditText precioInmuebleET;
-    Button registrarInmuebleBtn;
+    Button modificarInmuebleBtn;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseFirebase;
 
     CiudadesRepository repoCiudades;
 
+    private boolean seleccionCargaDatos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar_inmueble);
+
+        seleccionCargaDatos = false;
 
         toolbar = (Toolbar) findViewById(R.id.MI_toolbar);
         setSupportActionBar(toolbar);
@@ -93,13 +94,18 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
         ciudadesSpinner = (Spinner) findViewById(R.id.MI_ciudad_SP);
         descripcionInmuebleET = findViewById(R.id.MI_descripcion_ET);
         precioInmuebleET = findViewById(R.id.MI_precio_ET);
-        registrarInmuebleBtn = findViewById(R.id.MI_registrar_inmueble_BTN);
+        modificarInmuebleBtn = findViewById(R.id.MI_modificar_inmueble_BTN);
 
-        registrarInmuebleBtn.setOnClickListener(this);
+        modificarInmuebleBtn.setOnClickListener(this);
         seleccionarUbicacionBtn.setOnClickListener(this);
         provinciasSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (seleccionCargaDatos){
+                    seleccionCargaDatos = false;
+                    return;
+                }
+
                 repoCiudades.getCiudades(provinciasSpinner.getSelectedItem().toString(), (exito, ciudades) -> {
                     Collections.sort(ciudades.getMunicipios(), (c1, c2) -> c1.getNombre().compareTo(c2.getNombre()));
                     ArrayAdapter<ListaCiudadesModel.CiudadModel> adaptadorCiudades = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, ciudades.getMunicipios());
@@ -111,20 +117,7 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        repoCiudades.getProvincias((exito, provincias) -> {
-            Collections.sort(provincias.getProvincias(), (p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
-            ArrayAdapter<ListaProvinciasModel.ProvinciaModel> adaptadorProvincias = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, provincias.getProvincias());
-            provinciasSpinner.setAdapter(adaptadorProvincias);
-
-            repoCiudades.getCiudades("Buenos Aires", (exito2, ciudades) -> {
-                Collections.sort(ciudades.getMunicipios(), (c1, c2) -> c1.getNombre().compareTo(c2.getNombre()));
-                ArrayAdapter<ListaCiudadesModel.CiudadModel> adaptadorCiudades = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, ciudades.getMunicipios());
-                ciudadesSpinner.setAdapter(adaptadorCiudades);
-
-                cargarDatos();
-            });
-        });
-
+        cargarDatos();
     }
 
     @Override
@@ -154,7 +147,7 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
                 intent.putExtra("init_lon", ubiSeleccionada.longitude);
                 startActivityForResult(intent, LAUNCH_MAPS_ACTIVITY);
                 break;
-            case R.id.MI_registrar_inmueble_BTN:
+            case R.id.MI_modificar_inmueble_BTN:
                 guardarInmueble();
                 break;
         }
@@ -248,6 +241,9 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
                             }
                         }
 
+                        ArrayAdapter<ListaProvinciasModel.ProvinciaModel> adaptadorProvincias = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, provincias.getProvincias());
+                        provinciasSpinner.setAdapter(adaptadorProvincias);
+                        seleccionCargaDatos = true;
                         provinciasSpinner.setSelection(posProvincia);
 
                         repoCiudades.getCiudades(provincia, (exito2, ciudades) -> {
@@ -259,16 +255,17 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
                                 Log.d("PROBLEMAS", posActual + ": " + ciudades.getMunicipios().get(posActual).getNombre());
                                 if (ciudades.getMunicipios().get(posActual).getNombre().equals(ciudad)){
                                     posCiudad = posActual;
-                                    Toast.makeText(getApplicationContext(), ""+posCiudad, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
+                            ArrayAdapter<ListaCiudadesModel.CiudadModel> adaptadorCiudades = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, ciudades.getMunicipios());
+                            ciudadesSpinner.setAdapter(adaptadorCiudades);
                             ciudadesSpinner.setSelection(posCiudad);
                         });
+
+
                     });
 
-
-                    //lat/lng: (37.42245617226854,-122.08406891673805)
                     String latlngaux = direccion.split("\\(")[1];
                     String latlng = latlngaux.split("\\)")[0];
                     Double lat = Double.valueOf(latlng.split(",")[0]);

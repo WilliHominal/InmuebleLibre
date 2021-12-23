@@ -139,10 +139,10 @@
         app:layout_constraintBottom_toBottomOf="@id/MI_minimapa"/>
 
     <Button
-        android:id="@+id/MI_registrar_inmueble_BTN"
+        android:id="@+id/MI_modificar_inmueble_BTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="REGISTRAR"
+        android:text="MODIFICAR"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
