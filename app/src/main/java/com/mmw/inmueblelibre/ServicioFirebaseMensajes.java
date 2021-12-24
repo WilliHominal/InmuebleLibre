@@ -81,7 +81,8 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(texto))
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
         } else {
             Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
             intent.putExtra("id_inmueble", idInmueble);
@@ -98,7 +99,8 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(texto))
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
         }
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
