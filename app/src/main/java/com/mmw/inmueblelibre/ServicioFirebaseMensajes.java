@@ -88,7 +88,10 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
 
                 notificationManager.notify(123, builder.build());
             } else {
-                Intent intent = new Intent(this, ListaCompradosClienteActivity.class);
+                Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
+                intent.putExtra("id_inmueble", idInmueble);
+                intent.putExtra("tipo_usuario", tipoCliente);
+                intent.putExtra("estado_inmueble", "VENDIDO");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntentCliente = PendingIntent.getActivity(this, 0, intent, 0);
 
@@ -109,7 +112,10 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
             }
 
         } else {
-            Intent intent = new Intent(this, ListaReservasPropietarioActivity.class);
+            Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
+            intent.putExtra("id_inmueble", idInmueble);
+            intent.putExtra("tipo_usuario", tipoCliente);
+            intent.putExtra("estado_inmueble", "RESERVADO");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntentPropietario = PendingIntent.getActivity(this, 0, intent, 0);
 
