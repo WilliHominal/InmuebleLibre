@@ -380,13 +380,13 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
                         if (taskDB.isSuccessful()){
                             Toast.makeText(getApplicationContext(), "Reserva rechazada", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
-                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "No se pudo rechazar la reservay", Toast.LENGTH_SHORT).show();
                         }
                     });
 
+                    startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
+                    //finish();
                 }
             }
 

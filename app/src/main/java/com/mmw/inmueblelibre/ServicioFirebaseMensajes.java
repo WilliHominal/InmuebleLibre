@@ -18,8 +18,10 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
+import com.mmw.inmueblelibre.ui.cliente.ListaCompradosClienteActivity;
 import com.mmw.inmueblelibre.ui.global.VerDetallesInmuebleActivity;
 import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
+import com.mmw.inmueblelibre.ui.propietario.ListaReservasPropietarioActivity;
 
 import java.util.Map;
 
@@ -79,17 +81,14 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(texto))
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true);
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
                 notificationManager.notify(123, builder.build());
             } else {
-                Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
-                intent.putExtra("id_inmueble", idInmueble);
-                intent.putExtra("tipo_usuario", tipoCliente);
-                intent.putExtra("estado_inmueble", "VENDIDO");
+                Intent intent = new Intent(this, ListaCompradosClienteActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntentCliente = PendingIntent.getActivity(this, 0, intent, 0);
 
@@ -101,7 +100,7 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(texto))
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true);
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
@@ -110,10 +109,7 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
             }
 
         } else {
-            Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
-            intent.putExtra("id_inmueble", idInmueble);
-            intent.putExtra("tipo_usuario", tipoCliente);
-            intent.putExtra("estado_inmueble", "RESERVADO");
+            Intent intent = new Intent(this, ListaReservasPropietarioActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntentPropietario = PendingIntent.getActivity(this, 0, intent, 0);
 
@@ -125,7 +121,7 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(texto))
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
