@@ -66,23 +66,49 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
         NotificationCompat.Builder builder = null;
 
         if (tipoCliente.equals("CLIENTE")) {
-            Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
-            intent.putExtra("id_inmueble", idInmueble);
-            intent.putExtra("tipo_usuario", tipoCliente);
-            intent.putExtra("estado_inmueble", "VENDIDO");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent pendingIntentCliente = PendingIntent.getActivity(this, 0, intent, 0);
+            if (titulo.equals("RESERVA RECHAZADA")){
+                Intent intent = new Intent(this, InicioClienteActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntentCliente = PendingIntent.getActivity(this, 0, intent, 0);
 
-            builder = new NotificationCompat.Builder(this, "999")
-                    .setSmallIcon(R.drawable.icon_notificaciones)
-                    .setContentTitle(titulo)
-                    .setContentText(texto)
-                    .setContentIntent(pendingIntentCliente)
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(texto))
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setAutoCancel(true);
+                builder = new NotificationCompat.Builder(this, "999")
+                        .setSmallIcon(R.drawable.icon_notificaciones)
+                        .setContentTitle(titulo)
+                        .setContentText(texto)
+                        .setContentIntent(pendingIntentCliente)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(texto))
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                notificationManager.notify(123, builder.build());
+            } else {
+                Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
+                intent.putExtra("id_inmueble", idInmueble);
+                intent.putExtra("tipo_usuario", tipoCliente);
+                intent.putExtra("estado_inmueble", "VENDIDO");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntentCliente = PendingIntent.getActivity(this, 0, intent, 0);
+
+                builder = new NotificationCompat.Builder(this, "999")
+                        .setSmallIcon(R.drawable.icon_notificaciones)
+                        .setContentTitle(titulo)
+                        .setContentText(texto)
+                        .setContentIntent(pendingIntentCliente)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(texto))
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                notificationManager.notify(456, builder.build());
+            }
+
         } else {
             Intent intent = new Intent(this, VerDetallesInmuebleActivity.class);
             intent.putExtra("id_inmueble", idInmueble);
@@ -101,11 +127,13 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_logo_app))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+            notificationManager.notify(789, builder.build());
         }
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
-        notificationManager.notify(666, builder.build());
     }
 
 }
