@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            if (task.isSuccessful()){
                updatearToken();
                cargarMenuSegunTipoUsuario();
+               Toast.makeText(getApplicationContext(), "Si te llega esto borramos todo", Toast.LENGTH_SHORT).show();
            } else {
                Toast.makeText(getApplicationContext(), "Datos no válidos", Toast.LENGTH_SHORT).show();
            }
@@ -141,11 +142,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if (esProp){
                         startActivity(new Intent(LoginActivity.this, InicioPropietarioActivity.class));
-                        finish();
                     } else {
                         startActivity(new Intent(LoginActivity.this, InicioClienteActivity.class));
-                        finish();
                     }
+                    finish();
                 }
             }
 
