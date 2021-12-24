@@ -43,6 +43,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
     LinearLayout venderBtnLayout;
     Button reservarBtn;
     Button venderBtn;
+    Button rechazarBtn;
     Toolbar toolbar;
 
     TextView descripcionTV;
@@ -99,9 +100,11 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
         reservarBtn = findViewById(R.id.DETALLES_reservar_BTN);
         venderBtnLayout = findViewById(R.id.DETALLES_vender_btn_LL);
         venderBtn = findViewById(R.id.DETALLES_vender_BTN);
+        rechazarBtn = findViewById(R.id.DETALLES_rechazar_reserva_BTN);
 
         reservarBtn.setOnClickListener(this);
         venderBtn.setOnClickListener(this);
+        rechazarBtn.setOnClickListener(this);
 
         setearVisibilidadSegunDatos();
     }
@@ -146,6 +149,9 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                 break;
             case R.id.DETALLES_vender_BTN:
                 venderInmueble();
+                break;
+            case R.id.DETALLES_rechazar_reserva_BTN:
+                rechazarReserva();
                 break;
         }
     }
@@ -349,6 +355,46 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
             }
         });
 
+    }
+
+    private void rechazarReserva(){
+        String idInmueble = getIntent().getStringExtra("id_inmueble");
+
+        databaseFirebase.child("Inmuebles").child(idInmueble).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String idCliente = snapshot.child("id_cliente").getValue().toString();
+                    String tituloNotificacion = "RESERVA RECHAZADA";
+                    String mensajeNotificacion = "El propietario " + nombrePropietarioTV.getText().toString() + " ha rechazado su reserva del inmueble " + idInmueble + ".";
+
+                    enviarNotificacion(idCliente, tituloNotificacion, mensajeNotificacion, "CLIENTE", idInmueble);
+
+                    Log.d("ASD", "Notificacion enviada");
+
+                    Map<String, Object> mapaValores = new HashMap<>();
+                    mapaValores.put("fecha_reserva", "");
+                    mapaValores.put("estado", "CREADO");
+                    mapaValores.put("id_cliente", "");
+
+                    databaseFirebase.child("Inmuebles").child(idInmueble).updateChildren(mapaValores).addOnCompleteListener(taskDB -> {
+                        if (taskDB.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "Reserva rechazada", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No se pudo rechazar la reservay", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void enviarNotificacion(String idReceptor, String titulo, String mensaje, String tipoCliente, String idInmueble){
