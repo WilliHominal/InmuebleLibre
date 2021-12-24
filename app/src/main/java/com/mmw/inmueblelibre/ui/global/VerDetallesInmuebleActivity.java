@@ -202,7 +202,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
 
         String idInmueble = getIntent().getStringExtra("id_inmueble");
 
-        databaseFirebase.child("Inmuebles").child(idInmueble).addValueEventListener(new ValueEventListener() {
+        databaseFirebase.child("Inmuebles").child(idInmueble).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -220,7 +220,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     precioTV.setText(precio);
                     direccionTV.setText(direccion);
 
-                    databaseFirebase.child("Usuarios").child(idPropietario).addValueEventListener(new ValueEventListener() {
+                    databaseFirebase.child("Usuarios").child(idPropietario).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()){
@@ -238,7 +238,7 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                         case 1:
                             fechaVentaTV.setText(fechaVenta);
                         case 0:
-                            databaseFirebase.child("Usuarios").child(idCliente).addValueEventListener(new ValueEventListener() {
+                            databaseFirebase.child("Usuarios").child(idCliente).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){

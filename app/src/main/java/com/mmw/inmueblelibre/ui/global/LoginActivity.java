@@ -134,17 +134,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void cargarMenuSegunTipoUsuario(){
         String id = firebaseAuth.getCurrentUser().getUid();
 
-        databaseFirebase.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+        databaseFirebase.child("Usuarios").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
+
                     boolean esProp = snapshot.child("tipo").getValue().toString().equals("PROPIETARIO");
 
-                    if (esProp){
-                        Log.d("asd", "INICIANDO PROPIETARIO");
+                    if (esProp) {
                         startActivity(new Intent(LoginActivity.this, InicioPropietarioActivity.class));
-                    } else {
-                        Log.d("asd", "INICIANDO CLIENTE");
+                    }
+                    else {
                         startActivity(new Intent(LoginActivity.this, InicioClienteActivity.class));
                     }
                     finish();
@@ -156,5 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
+
+
     }
 }

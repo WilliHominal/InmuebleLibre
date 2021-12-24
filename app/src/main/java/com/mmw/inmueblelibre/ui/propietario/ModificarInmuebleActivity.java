@@ -214,7 +214,7 @@ public class ModificarInmuebleActivity extends AppCompatActivity implements OnMa
     private void cargarDatos() {
         String idInmueble = getIntent().getStringExtra("id_inmueble");
 
-        databaseFirebase.child("Inmuebles").child(idInmueble).addValueEventListener(new ValueEventListener() {
+        databaseFirebase.child("Inmuebles").child(idInmueble).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){

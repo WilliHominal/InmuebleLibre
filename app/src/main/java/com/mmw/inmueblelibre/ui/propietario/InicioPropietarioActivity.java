@@ -208,7 +208,7 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
     private void obtenerInfoUsuario(){
         String id = firebaseAuth.getCurrentUser().getUid();
 
-        databaseFirebase.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+        databaseFirebase.child("Usuarios").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){

@@ -77,19 +77,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void cargarMenuSegunTipoUsuario(){
         String id = firebaseAuth.getCurrentUser().getUid();
 
-        databaseFirebase.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+        databaseFirebase.child("Usuarios").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
+
                     boolean esProp = snapshot.child("tipo").getValue().toString().equals("PROPIETARIO");
 
-                    if (esProp){
+                    if (esProp) {
                         startActivity(new Intent(MainActivity.this, InicioPropietarioActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(MainActivity.this, InicioClienteActivity.class));
-                        finish();
                     }
+                    else {
+                        startActivity(new Intent(MainActivity.this, InicioClienteActivity.class));
+                    }
+                    finish();
                 }
             }
 
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
+
     }
 
     private void crearCanalNotificaciones() {
