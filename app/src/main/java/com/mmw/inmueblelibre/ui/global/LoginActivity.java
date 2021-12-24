@@ -141,8 +141,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     boolean esProp = snapshot.child("tipo").getValue().toString().equals("PROPIETARIO");
 
                     if (esProp){
+                        Log.d("asd", "INICIANDO PROPIETARIO");
                         startActivity(new Intent(LoginActivity.this, InicioPropietarioActivity.class));
                     } else {
+                        Log.d("asd", "INICIANDO CLIENTE");
                         startActivity(new Intent(LoginActivity.this, InicioClienteActivity.class));
                     }
                     finish();
