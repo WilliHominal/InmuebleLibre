@@ -65,6 +65,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <receiver android:name=".receiver.InmuebleReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="CADUCIDAD_INMUEBLE"/>
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".ServicioFirebaseMensajes"

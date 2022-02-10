@@ -6,6 +6,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mmw.inmueblelibre.R;
+import com.mmw.inmueblelibre.receiver.InmuebleReceiver;
 import com.mmw.inmueblelibre.ui.cliente.InicioClienteActivity;
 import com.mmw.inmueblelibre.ui.propietario.InicioPropietarioActivity;
 import com.mmw.inmueblelibre.repository.MensajesFirebaseRepository;
@@ -307,6 +311,16 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     }
                 });
 
+                Intent intentReceiver = new Intent(this, InmuebleReceiver.class);
+                intentReceiver.setAction("CADUCIDAD_INMUEBLE");
+                intentReceiver.putExtra("ID_INMUEBLE", idInmueble);
+
+                PendingIntent intentAlarm = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intentReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                final AlarmManager alarma = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                //TODO setear tiempo para el aviso (10 segs para probar)
+                alarma.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000, intentAlarm);
+
                 Toast.makeText(getApplicationContext(), "Inmueble reservado", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
                 finish();
@@ -386,7 +400,6 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                     });
 
                     startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioPropietarioActivity.class));
-                    //finish();
                 }
             }
 

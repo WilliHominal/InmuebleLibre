@@ -115,6 +115,13 @@ public class InicioClienteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //TODO si el mensaje de la notif de InmuebleReceiver dice caducará pronto, buscar inmuebles caducados y actualizar:
+        //buscar en la base de datos los inmuebles que tengan:
+        //  id_cliente = firebaseAuth.getCurrentUser().getUid()
+        //  estado = reservado
+        //  fecha_reserva + TIEMPO_LIMITE_RESERVA (igual al tiempo para la notificacion + 1 dia o algo asi) > tiempo actual
+        // si el mensaje queda como "la reserva ha caducado" o algo así, ignorar esto y hacerlo en el receiver
     }
 
     private void cerrarSesion(){
