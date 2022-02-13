@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI.global.VerDetallesInmuebleActivity">
+    tools:context=".ui.global.VerDetallesInmuebleActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/DETALLES_toolbar"/>
@@ -245,13 +245,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginHorizontal="6dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/DETALLES_vender_BTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="VENDER"
+                android:layout_marginEnd="6dp"
+                android:layout_gravity="bottom"
+                android:textSize="17sp"/>
+
+            <Button
+                android:id="@+id/DETALLES_rechazar_reserva_BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RECHAZAR"
                 android:layout_gravity="bottom"
                 android:textSize="17sp"/>
 

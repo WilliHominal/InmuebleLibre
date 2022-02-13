@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI.global.RegistrarActivity">
+    tools:context=".ui.global.RegistrarActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/REGISTRAR_toolbar"

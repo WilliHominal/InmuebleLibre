@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Inmueble Libre</string>
+    <string name="default_notification_channel_id">0</string>
+    <string name="id_channel">2021</string>
+    <string name="name_channel">NOMBRECANAL</string>
+    <string name="channel_description">DESCRIPCIONDELCANAL</string>
 </resources>

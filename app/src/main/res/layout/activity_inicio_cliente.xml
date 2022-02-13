@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UI.cliente.InicioClienteActivity">
+        tools:context=".ui.cliente.InicioClienteActivity">
 
         <include layout="@layout/toolbar"
             android:id="@+id/INICIOCLI_toolbar"
@@ -19,8 +19,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/INICIOCLI_listaReservas"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/INICIOCLI_toolbar" />
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/INICIOCLI_toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
