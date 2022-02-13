@@ -80,7 +80,6 @@ public class InicioPropietarioActivity extends AppCompatActivity implements View
 
         agregarInmuebleBtn.setOnClickListener(this);
 
-        //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
         menuDrawer.setNavigationItemSelectedListener(menuItem -> {
 
             drawerLayout.closeDrawer(menuDrawer);

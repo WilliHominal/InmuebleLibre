@@ -72,7 +72,6 @@ public class ListaReservasPropietarioActivity extends AppCompatActivity {
         listaReservasRV.setAdapter(adaptadorListaReservas);
         obtenerLista();
 
-        //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
         menuDrawer.setNavigationItemSelectedListener(menuItem -> {
 
             drawerLayout.closeDrawer(menuDrawer);

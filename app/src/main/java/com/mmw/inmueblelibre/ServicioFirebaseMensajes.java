@@ -36,7 +36,6 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        createNotificationChannel();
         Map<String,String> datos = remoteMessage.getData();
         for(Map.Entry<String,String> entrada : datos.entrySet()){
             Log.d(TAG, entrada.getKey() +" -> "+ entrada.getValue() );
@@ -47,19 +46,6 @@ public class ServicioFirebaseMensajes extends FirebaseMessagingService {
         }
 
         crearNotificacion(remoteMessage.getData().get("titulo"), remoteMessage.getData().get("texto"), remoteMessage.getData().get("tipoCliente"), remoteMessage.getData().get("idInmueble"));
-
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.name_channel);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("999", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
     private void crearNotificacion(String titulo, String texto, String tipoCliente, String idInmueble)

@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             CharSequence name = "NOTIFICACIONES";
             String description = "Canal de notificaciones";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("0", name, importance);
+            NotificationChannel channel = new NotificationChannel("999", name, importance);
             channel.setDescription(description);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);

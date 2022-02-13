@@ -72,7 +72,6 @@ public class ListaVendidosPropietarioActivity extends AppCompatActivity {
         listaVendidosRV.setAdapter(adaptadorListaVendidos);
         obtenerLista();
 
-        //TODO IMPLEMENTAR ACCIONES DEL MENU DRAWER
         menuDrawer.setNavigationItemSelectedListener(menuItem -> {
 
             drawerLayout.closeDrawer(menuDrawer);

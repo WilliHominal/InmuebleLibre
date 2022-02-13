@@ -318,8 +318,8 @@ public class VerDetallesInmuebleActivity extends AppCompatActivity implements Vi
                 PendingIntent intentAlarm = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intentReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 final AlarmManager alarma = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                //TODO setear tiempo para el aviso (10 segs para probar)
-                alarma.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000, intentAlarm);
+                //tiempo para el aviso (60 segs para probar)
+                alarma.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+60000, intentAlarm);
 
                 Toast.makeText(getApplicationContext(), "Inmueble reservado", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(VerDetallesInmuebleActivity.this, InicioClienteActivity.class));
